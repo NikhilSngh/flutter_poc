@@ -9,6 +9,7 @@ class UiColors{
   static const Color _genuinePink = Color(0xFFD9177F);
   static const Color _pureDark = Color(0xFF000000);
   static const Color _informGrey = Color(0xFF191919);
+  static const Color _blue = Color(0xFF394094);
 
 
   static final Map<Brightness, Color> canvasColor =
@@ -22,6 +23,12 @@ class UiColors{
 
   static final Map<Brightness, Color> informGreyColor =
   _buildColor(lightColor: _informGrey, darkColor: _informGrey);
+
+  static final Map<Brightness, Color> cardColor =
+  _buildColor(lightColor: _blue, darkColor: _blue);
+
+  static final Map<Brightness, Color> appBarColor =
+  _buildColor(lightColor: _blue, darkColor: _blue);
 
 
 
