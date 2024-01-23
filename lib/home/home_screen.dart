@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/data/network/api_url.dart';
 import 'package:flutter_poc/home/bloc/cubit/home_cubit.dart';
+import 'package:flutter_poc/home/bloc/cubit/wish_list_cubit.dart';
 import 'package:flutter_poc/home/bloc/state/home_state.dart';
 import 'package:flutter_poc/home/movie_item_widget.dart';
 import 'package:flutter_poc/home/repository/home_repository.dart';
@@ -17,9 +18,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeCubit>(
-      create: (context) =>
-      HomeCubit(HomeRepository())..loadFirstTwoPageOfMovie(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeCubit>(
+          create: (BuildContext context) => HomeCubit(HomeRepository())..loadFirstTwoPageOfMovie(),
+        ),
+        BlocProvider<WishListCubit>(
+          create: (BuildContext context) => WishListCubit(),
+        ),
+      ],
       child: Scaffold(
         body: SafeArea(
           child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
@@ -27,11 +34,11 @@ class HomeScreen extends StatelessWidget {
                 ? SingleChildScrollView(
               controller: initScrollListener(context),
               padding: const EdgeInsets.only(bottom: Sizes.size16),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: Sizes.size320,
-                    child: Stack(children: [
+              child: SizedBox(
+                height: Sizes.size320,
+                child: Stack(
+                  children: [
+                    Column(children: [
                       PageView.builder(
                           controller:
                           context.read<HomeCubit>().pageController,
@@ -45,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                                 context: context,
                                 movie: state.carouselList![index],
                                 bannerWidget: SizedBox(
-                                    height: Sizes.size260,
+                                    height: Sizes.size250,
                                     width:
                                     MediaQuery.of(context).size.width,
                                     child: Image.network(
@@ -88,36 +95,39 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ]),
-                  ),
-                  GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 1.3, crossAxisCount: 2),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: (){
-                          context.router.push(DetailScreenRoute(movie: state.gridList![index]));
-                        },
-                        child: MovieItemWidget(
-                            context: context,
-                            movie: state.gridList![index],
-                            bannerWidget: Image.network(
-                                "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                            isGridView: true),
-                      );
-                    },
-                    itemCount: state.gridList?.length,
-                  ),
-                  Padding(
-                    padding:
-                    const EdgeInsets.only(bottom: Sizes.size16),
-                    child: state.isReachedEnd
-                        ? const CircularProgressIndicator()
-                        : Container(),
-                  )
-                ],
+                    GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1.3, crossAxisCount: 2),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: (){
+                            context.router.push(DetailScreenRoute(movie: state.gridList![index]));
+                          },
+                          child: MovieItemWidget(
+                              context: context,
+                              movie: state.gridList![index],
+                              bannerWidget: SizedBox(
+                                height: Sizes.size90,
+                                child: Image.network(
+                                    "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
+                              ),
+                              isGridView: true,),
+                        );
+                      },
+                      itemCount: state.gridList?.length,
+                    ),
+                    Padding(
+                      padding:
+                      const EdgeInsets.only(bottom: Sizes.size16),
+                      child: state.isReachedEnd
+                          ? const CircularProgressIndicator()
+                          : Container(),
+                    )
+                  ],
+                ),
               ),
             )
                 : state is HomeLoading

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'movie_list.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class MovieListModel {
   final int? page;
   @JsonKey(name: "results")
@@ -19,37 +19,37 @@ class MovieListModel {
       _$MovieListModelFromJson(data);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Movie {
-  final String? title;
-  final String? overview;
-  final bool? adult;
+   String? title;
+   String? overview;
+   bool? adult;
   @JsonKey(name: "original_language")
-  final String? originalLanguage;
+   String? originalLanguage;
   @JsonKey(name: "backdrop_path")
-  final String? backdropPath;
+   String? backdropPath;
 
   @JsonKey(name: "poster_path")
-  final String? posterPath;
-  final int? id;
+   String? posterPath;
+   int? id;
   @JsonKey(name: "original_title")
-  final String? originalTitle;
+   String? originalTitle;
   @JsonKey(name: "media_type")
-  final String? mediaType;
+   String? mediaType;
   @JsonKey(name: "genre_ids")
-  final List<int>? genreIds;
-  final double? popularity;
+   List<int>? genreIds;
+   double? popularity;
   @JsonKey(name: "release_date")
-  final String? releaseDate;
-  final bool? video;
+   String? releaseDate;
+   bool? video;
   @JsonKey(name: "vote_average")
-  final double? voteAverage;
+   double? voteAverage;
   @JsonKey(name: "vote_count")
-  final int? voteCount;
+   int? voteCount;
 
 
 
-  const Movie(
+   Movie(
       this.title,
       this.overview,
       this.adult,
@@ -72,4 +72,36 @@ class Movie {
   String getContentRating() {
     return adult! ? "A" : "U/A";
   }
+
+
+  Movie.fromMap(Map<String, Object?> map) {
+    backdropPath = map['imageUrl'] as String;
+    adult = map['adult'] == 1;
+    id = map['id'] as int;
+    title = map['title'] as String;
+    overview = map['overview'] as String;
+    mediaType = map['mediaType'] as String;
+    releaseDate = map['releaseDate'] as String;
+    voteAverage = (map['voteAverage'] as num?)?.toDouble();
+    popularity = (map['popularity'] as num?)?.toDouble();
+    voteCount = map['voteCount'] as int;
+    originalLanguage = map['language'] as String;
+    posterPath = map['poster'] as String;
+  }
+
+  Map<String, Object?> toMap(Movie instance) => <String, Object?>{
+    'imageUrl': instance.backdropPath,
+    'adult': (instance.adult == true) ? 1 : 0,
+    'id': instance.id,
+    'title': instance.title,
+    'overview': instance.overview,
+    'mediaType': instance.mediaType,
+    'releaseDate': instance.releaseDate,
+    'voteCount': instance.voteCount,
+    'voteAverage': instance.voteAverage,
+    'language': instance.originalLanguage,
+    'poster': instance.posterPath,
+    'popularity': instance.popularity
+  };
+
 }

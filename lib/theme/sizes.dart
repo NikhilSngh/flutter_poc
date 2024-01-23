@@ -90,6 +90,7 @@ class Sizes {
   static const double size26 = 26;
 
   static const double size85 = 85;
+  static const double size90 = 90;
 
   static const double size200 = 200;
 
@@ -120,6 +121,7 @@ class Sizes {
   static const double size110 = 110;
   static const double size300 = 300;
   static const double size320 = 320;
+  static const double size250 = 250;
   static const double size260 = 260;
   static const double size280 = 280;
 }

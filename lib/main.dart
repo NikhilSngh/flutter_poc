@@ -5,6 +5,7 @@ import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/theme/ui_theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setUp();
   runApp(MyApp());
 }
