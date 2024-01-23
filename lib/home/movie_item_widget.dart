@@ -92,7 +92,7 @@ class MovieItemWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: isGridView ? Sizes.size10 : Sizes.size16,
+              height: isGridView ? Sizes.size8 : Sizes.size16,
             ),
             Text(movie.title ?? '',
               maxLines: 1,)

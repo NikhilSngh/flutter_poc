@@ -34,68 +34,63 @@ class HomeScreen extends StatelessWidget {
                 ? SingleChildScrollView(
               controller: initScrollListener(context),
               padding: const EdgeInsets.only(bottom: Sizes.size16),
-              child: SizedBox(
-                height: Sizes.size320,
-                child: Stack(
-                  children: [
-                    Column(children: [
-                      PageView.builder(
-                          controller:
-                          context.read<HomeCubit>().pageController,
-                          onPageChanged: (int page) {
-                            BlocProvider.of<HomeCubit>(context)
-                                .updateDotIndicator(page);
-                          },
-                          itemCount: state.carouselList?.length,
-                          itemBuilder: (context, index) {
-                            return MovieItemWidget(
-                                context: context,
-                                movie: state.carouselList![index],
-                                bannerWidget: SizedBox(
-                                    height: Sizes.size250,
-                                    width:
-                                    MediaQuery.of(context).size.width,
-                                    child: Image.network(
-                                      "${ApiUrl.IMAGE_BASE_URL}${state.carouselList![index].backdropPath ?? ''}",
-                                      fit: BoxFit.cover,
-                                    )),
-                                isGridView: false);
-                          }),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: Sizes.size120,
-                          margin: const EdgeInsets.only(
-                              bottom: Sizes.size20),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                const EdgeInsets.all(Sizes.size5),
-                                child: SizedBox(
-                                    height: Sizes.size10,
-                                    child:
-                                    state.carouselCurrentPage == index
-                                        ? const Icon(
-                                      Icons.circle,
-                                      size: Sizes.size8,
-                                      color: Colors.white,
-                                    )
-                                        : const Icon(
-                                      Icons.circle_outlined,
-                                      size: Sizes.size8,
-                                      color: Colors.white,
-                                    )),
-                              );
-                            },
-                            itemCount: state.carouselList?.length,
-                            scrollDirection: Axis.horizontal,
-                          ),
-                        ),
-                      ),
-                    ]),
-                    GridView.builder(
+              child: Column(
+                children: [
+                  Container(
+                    height: Sizes.size320,
+                    child: PageView.builder(
+                        controller:
+                        context.read<HomeCubit>().pageController,
+                        onPageChanged: (int page) {
+                          BlocProvider.of<HomeCubit>(context)
+                              .updateDotIndicator(page);
+                        },
+                        itemCount: state.carouselList?.length,
+                        itemBuilder: (context, index) {
+                          return MovieItemWidget(
+                              context: context,
+                              movie: state.carouselList![index],
+                              bannerWidget: SizedBox(
+                                  height: Sizes.size250,
+                                  width:
+                                  MediaQuery.of(context).size.width,
+                                  child: Image.network(
+                                    "${ApiUrl.IMAGE_BASE_URL}${state.carouselList![index].backdropPath ?? ''}",
+                                    fit: BoxFit.cover,
+                                  )),
+                              isGridView: false);
+                        }),
+                  ),
+                  SizedBox(
+                    height: Sizes.size20,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding:
+                          const EdgeInsets.all(Sizes.size5),
+                          child: SizedBox(
+                              height: Sizes.size0,
+                              child:
+                              state.carouselCurrentPage == index
+                                  ? const Icon(
+                                Icons.circle,
+                                size: Sizes.size8,
+                                color: Colors.blue,
+                              )
+                                  : const Icon(
+                                Icons.circle_outlined,
+                                size: Sizes.size8,
+                                color: Colors.blueAccent,
+                              )),
+                        );
+                      },
+                      itemCount: state.carouselList?.length,
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                  Container(
+                    child: GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate:
@@ -109,25 +104,22 @@ class HomeScreen extends StatelessWidget {
                           child: MovieItemWidget(
                               context: context,
                               movie: state.gridList![index],
-                              bannerWidget: SizedBox(
-                                height: Sizes.size90,
-                                child: Image.network(
-                                    "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                              ),
-                              isGridView: true,),
+                              bannerWidget: Image.network(
+                                  "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
+                              isGridView: true),
                         );
                       },
                       itemCount: state.gridList?.length,
                     ),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(bottom: Sizes.size16),
-                      child: state.isReachedEnd
-                          ? const CircularProgressIndicator()
-                          : Container(),
-                    )
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding:
+                    const EdgeInsets.only(bottom: Sizes.size16),
+                    child: state.isReachedEnd
+                        ? const CircularProgressIndicator()
+                        : Container(),
+                  )
+                ],
               ),
             )
                 : state is HomeLoading
