@@ -16,7 +16,7 @@ class WishListCubit extends Cubit<WishListState> {
     if (isNeedToAdd) {
       var result = await db.insert(movie);
       if (result > 0) {
-        if (context.mounted) emit(WishListSuccess("successfullyAdded"));
+        if (context.mounted) emit(WishListSuccess("successfullyAdded",true));
       } else {
         if (context.mounted) emit(WishListError("dbError"));
       }
@@ -24,7 +24,7 @@ class WishListCubit extends Cubit<WishListState> {
       var result = await db.delete(movie.id ?? 0);
       if (result > 0) {
         if (context.mounted) {
-          emit(WishListSuccess("successfullyRemoved"));
+          emit(WishListSuccess("successfullyRemoved",false));
         }
 
       } else {
