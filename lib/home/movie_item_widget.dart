@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/home/bloc/cubit/wish_list_cubit.dart';
+import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/theme/sizes.dart';
 
@@ -12,14 +13,13 @@ class MovieItemWidget extends StatelessWidget {
     required this.movie,
     required this.bannerWidget,
     required this.isGridView,
-    required this.isFavourite
   });
 
   final BuildContext context;
   final Movie movie;
   final Widget bannerWidget;
   final bool isGridView;
-  final bool isFavourite ;
+  bool isFavourite  = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +44,17 @@ class MovieItemWidget extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: Padding(
                         padding: const EdgeInsets.all(Sizes.size5),
-                        child: Icon(
-                          Icons.star_border,
-                          color: isFavourite ? Colors.blueAccent : Colors
-                              .white,
+                        child: BlocBuilder<WishListCubit,WishListState>(
+                          builder: (context, state){
+                            if(state is WishListSuccess){
+                              isFavourite = state.isFavourite;
+                            }
+                           return Icon(
+                             Icons.star_border,
+                             color: isFavourite ? Colors.blueAccent : Colors
+                                 .white,
+                           );
+                          }
                         ),
                       ),
                     ),

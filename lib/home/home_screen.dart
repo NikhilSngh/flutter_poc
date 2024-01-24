@@ -6,7 +6,6 @@ import 'package:flutter_poc/data/network/api_url.dart';
 import 'package:flutter_poc/home/bloc/cubit/home_cubit.dart';
 import 'package:flutter_poc/home/bloc/cubit/wish_list_cubit.dart';
 import 'package:flutter_poc/home/bloc/state/home_state.dart';
-import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/carousel_view.dart';
 import 'package:flutter_poc/home/movie_item_widget.dart';
 import 'package:flutter_poc/home/repository/home_repository.dart';
@@ -27,11 +26,9 @@ class HomeScreen extends StatelessWidget {
         BlocProvider<HomeCubit>(
           create: (BuildContext context) => HomeCubit(HomeRepository())..loadFirstTwoPageOfMovie(),
         ),
-        BlocProvider<WishListCubit>(
-          create: (BuildContext context) => WishListCubit(),
-        ),
       ],
       child: Scaffold(
+        appBar: AppBar(title: const Text("Home")),
         body: SafeArea(
           child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
             return state is HomeLoaded
@@ -52,18 +49,14 @@ class HomeScreen extends StatelessWidget {
                         onTap: (){
                           context.router.push(DetailScreenRoute(movie: state.gridList![index]));
                         },
-                        child: BlocBuilder<WishListCubit, WishListState>(
-                          builder: (context,wishListState){
-                            if (state is WishListSuccess) {
-                              isFav = (wishListState as WishListSuccess).isFavourite;
-                            }
-                            return MovieItemWidget(
-                                context: context,
-                                movie: state.gridList![index],
-                                bannerWidget: Image.network(
-                                    "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                                isGridView: true, isFavourite: isFav);
-                          },
+                        child: BlocProvider<WishListCubit>(
+                        create: (BuildContext context) => WishListCubit(),
+                      child:MovieItemWidget(
+                              context: context,
+                              movie: state.gridList![index],
+                              bannerWidget: Image.network(
+                                  "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
+                              isGridView: true,),
                         ),
                       );
                     },
