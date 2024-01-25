@@ -37,7 +37,8 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: Sizes.size16),
               child: Column(
                 children: [
-                  CarouselView(state.carouselList??[]),
+                  CarouselView((state.carouselList!.length>10)?
+                  state.carouselList!.sublist(0,10):[]),
                   GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -56,7 +57,8 @@ class HomeScreen extends StatelessWidget {
                               movie: state.gridList![index],
                               bannerWidget: Image.network(
                                   "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                              isGridView: true,),
+                              isGridView: true, isFavourite: state.favorite.map((item) => item).
+                      contains(state.gridList![index].id),),
                         ),
                       );
                     },

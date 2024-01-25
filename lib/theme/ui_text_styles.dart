@@ -10,6 +10,9 @@ class UiTextStyles{
    static TextTheme defaultDarkTextTheme = TextTheme(titleSmall: _getTitleSmallDark(),
    );
 
+   static TextTheme elevateButtonTextTheme = TextTheme(titleSmall: _getTitleSmall(),
+   );
+
    static TextStyle _getTitleSmall() => GoogleFonts.inter(
      fontSize: 16,
      fontWeight: FontWeight.w900,

@@ -6,7 +6,6 @@ class UiColors{
   UiColors._();
 
   static const Color _pureWhite = Color(0xFFFFFFFF);
-  static const Color _genuinePink = Color(0xFFD9177F);
   static const Color _pureDark = Color(0xFF000000);
   static const Color _informGrey = Color(0xFF191919);
   static const Color _blue = Color(0xFF394094);
@@ -15,8 +14,11 @@ class UiColors{
   static final Map<Brightness, Color> canvasColor =
   _buildColor(lightColor: _pureWhite, darkColor: _pureWhite);
 
-  static final Map<Brightness, Color> primaryColor =
-  _buildColor(lightColor: _genuinePink, darkColor: _genuinePink);
+  static final Map<Brightness, Color> primaryTextColor =
+  _buildColor(lightColor: _blue, darkColor: _blue);
+
+  static final Map<Brightness, Color> primaryTextColorWhite =
+  _buildColor(lightColor: _pureWhite, darkColor: _pureWhite);
 
   static final Map<Brightness, Color> onPrimary =
   _buildColor(lightColor: _pureWhite, darkColor: _pureDark);
@@ -28,6 +30,9 @@ class UiColors{
   _buildColor(lightColor: _blue, darkColor: _blue);
 
   static final Map<Brightness, Color> appBarColor =
+  _buildColor(lightColor: _blue, darkColor: _blue);
+
+  static final Map<Brightness, Color> appThemeColor =
   _buildColor(lightColor: _blue, darkColor: _blue);
 
 

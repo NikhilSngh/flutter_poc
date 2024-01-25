@@ -28,7 +28,6 @@ class Movie {
    String? originalLanguage;
   @JsonKey(name: "backdrop_path")
    String? backdropPath;
-
   @JsonKey(name: "poster_path")
    String? posterPath;
    int? id;
@@ -46,8 +45,6 @@ class Movie {
    double? voteAverage;
   @JsonKey(name: "vote_count")
    int? voteCount;
-
-
 
    Movie(
       this.title,
@@ -103,5 +100,4 @@ class Movie {
     'poster': instance.posterPath,
     'popularity': instance.popularity
   };
-
 }

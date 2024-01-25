@@ -7,19 +7,20 @@ import 'package:flutter_poc/theme/sizes.dart';
 
 
 class MovieItemWidget extends StatelessWidget {
-  MovieItemWidget({
+   MovieItemWidget({
     super.key,
     required this.context,
     required this.movie,
     required this.bannerWidget,
     required this.isGridView,
+    required this.isFavourite
   });
 
   final BuildContext context;
   final Movie movie;
   final Widget bannerWidget;
   final bool isGridView;
-  bool isFavourite  = false;
+  bool isFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +92,14 @@ class MovieItemWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: isGridView ? Sizes.size8 : Sizes.size16,
+              height: isGridView ? Sizes.size4 : Sizes.size16,
             ),
             Text(movie.title ?? '',
-              maxLines: 1,)
+              maxLines: 1,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleSmall)
           ],
         ),
       ),
