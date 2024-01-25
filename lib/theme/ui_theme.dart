@@ -64,4 +64,5 @@ class UiTheme {
     return CardTheme(
         color: UiColors.cardColor.lightColor, elevation: Sizes.size10);
   }
+
 }

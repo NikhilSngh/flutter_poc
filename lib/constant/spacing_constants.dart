@@ -8,4 +8,5 @@ class SpacingConstant {
   static const double buttonPaddingElevatedButtonMedium = 16;
   static const double buttonPaddingElevatedButtonLarge = 24;
   static const double paddingAccount = 10;
+  static const double accountWidgetVerticalSpacing10 = 20;
 }

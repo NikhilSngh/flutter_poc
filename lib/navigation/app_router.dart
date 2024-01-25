@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_poc/account/account_screen.dart';
 import 'package:flutter_poc/bottombar/bottom_bar.dart';
 import 'package:flutter_poc/detail/detail_screen.dart';
+import 'package:flutter_poc/editaccount/edit_account_screen.dart';
 import 'package:flutter_poc/favourite/favourite_screen.dart';
 import 'package:flutter_poc/home/home_screen.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
@@ -23,6 +24,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: DetailScreenRoute.page),
         AutoRoute(page: LoginScreenRoute.page, initial: true),
         AutoRoute(page: SignupScreenRoute.page, initial: false),
-        AutoRoute(page: AccountScreenRoute.page)
+        AutoRoute(page: AccountScreenRoute.page),
+        AutoRoute(page: EditAccountRoute.page)
       ];
 }

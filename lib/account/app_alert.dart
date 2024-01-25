@@ -24,8 +24,14 @@ class AppAlert {
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: UiColors.primaryTextColor.lightColor,
-              title: title != '' ? Text(title ?? '') : null,
-              content: Text(message ?? ''),
+              title: title != '' ? Text(title ?? '',style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleSmall) : null,
+              content: Text(message ?? '',style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleSmall),
               actions: [
                 AppTextButton(
                     title: 'Cancel',

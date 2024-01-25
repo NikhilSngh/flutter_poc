@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/constant/padding_constants.dart';
 
 
 class Info extends StatelessWidget {
@@ -9,7 +10,16 @@ class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(children: [Text(label), const Spacer(), Text(value)]));
+        padding: const EdgeInsets.all(AppPaddings.small),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [Text(label,style:  Theme
+                .of(context)
+                .textTheme
+                .titleSmall,),
+          Text(value,style:  Theme
+              .of(context)
+              .textTheme
+              .titleSmall)]));
   }
 }

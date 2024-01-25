@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:flutter_poc/signup/bloc/signup_cubit.dart';
 import 'package:flutter_poc/signup/bloc/state/signup_state.dart';
+import 'package:flutter_poc/signup/profile_Image.dart';
 import 'package:flutter_poc/theme/sizes.dart';
 import 'package:flutter_poc/utils/date_picker.dart';
 import 'package:flutter_poc/utils/validator.dart';
@@ -62,6 +63,14 @@ class SignupScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisSize:MainAxisSize.min,
                                 children: <Widget>[
+                                  ValueListenableBuilder(
+                                      valueListenable: _gender,
+                                      builder: (context, value, _) {
+                                        return ProfileImage(pickerImage: (image) {
+                                          _pickedImage = image;
+                                        }, gender: _gender.value);
+                                      }
+                                  ),
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.signupWidgetVerticalSpacing10,
                                     top: SpacingConstant.signupWidgetVerticalSpacing10),
