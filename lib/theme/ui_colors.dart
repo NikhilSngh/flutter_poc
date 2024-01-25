@@ -32,6 +32,9 @@ class UiColors{
   static final Map<Brightness, Color> appBarColor =
   _buildColor(lightColor: _blue, darkColor: _blue);
 
+  static final Map<Brightness, Color> bottomBarColor =
+  _buildColor(lightColor: _blue, darkColor: _blue);
+
   static final Map<Brightness, Color> appThemeColor =
   _buildColor(lightColor: _blue, darkColor: _blue);
 

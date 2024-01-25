@@ -13,8 +13,8 @@ class UiTheme {
       appBarTheme: _appBarThemeData(Brightness.light),
       textTheme: UiTextStyles.defaultWhiteTextTheme,
       cardTheme: _cardTheme(),
-      elevatedButtonTheme: _buttonTheme()
-  );
+      elevatedButtonTheme: _buttonTheme(),
+      bottomNavigationBarTheme: _bottomNavigationBarTheme());
 
   static ThemeData darkTheme = ThemeData(
       brightness: Brightness.dark,
@@ -25,18 +25,18 @@ class UiTheme {
 
   static AppBarTheme _appBarThemeData(Brightness brightness) {
     return AppBarTheme(
-        backgroundColor: UiColors.appBarColor[brightness],
-        iconTheme: IconThemeData(
-            color: UiColors.primaryTextColorWhite[brightness]),
-        systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarBrightness: brightness,
-            statusBarIconBrightness: brightness == Brightness.dark
-                ? Brightness.light
-                : Brightness.dark,
-            statusBarColor: Colors.transparent),
-        titleTextStyle:TextStyle(
-          color: UiColors.primaryTextColorWhite[brightness]),
-        );
+      backgroundColor: UiColors.appBarColor[brightness],
+      iconTheme:
+          IconThemeData(color: UiColors.primaryTextColorWhite[brightness]),
+      systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: brightness,
+          statusBarIconBrightness: brightness == Brightness.dark
+              ? Brightness.light
+              : Brightness.dark,
+          statusBarColor: Colors.transparent),
+      titleTextStyle:
+          TextStyle(color: UiColors.primaryTextColorWhite[brightness]),
+    );
   }
 
   static ElevatedButtonThemeData _buttonTheme() {
@@ -49,17 +49,19 @@ class UiTheme {
             textStyle: const TextStyle(
               fontSize: AppFontSize.regular,
               fontWeight: FontWeight.w600,
-              color: Color(0xffffffff),
-            )
-        )
-    );
+              color: Colors.white,
+            )));
+  }
+
+  static BottomNavigationBarThemeData _bottomNavigationBarTheme() {
+    return BottomNavigationBarThemeData(
+          selectedItemColor: UiColors.bottomBarColor.lightColor,
+          backgroundColor: Colors.white
+        );
   }
 
   static CardTheme _cardTheme() {
     return CardTheme(
         color: UiColors.cardColor.lightColor, elevation: Sizes.size10);
   }
-
 }
-
-

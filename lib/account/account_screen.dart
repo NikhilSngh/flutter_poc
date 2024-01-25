@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_poc/account/accountInfo_widget.dart';
 import 'package:flutter_poc/account/accountcard_widget.dart';
+import 'package:flutter_poc/account/app_alert.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
+import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/sl/locator.dart';
 
 
@@ -33,16 +35,16 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void _logout() {
-    /*AppAlert(
+    AppAlert(
         title: AppStrings.logout,
         message: AppStrings.logoutMessage,
         confirmBtnText: AppStrings.logout,
         confirmTap: () {
-          sharedInstance.remove(AppSharedPrefEnums.loginStatus);
+          sharedInstance.remove(AppSharedPrefKey.loginStatus);
           context.router.push(
-            const OnboardingRoute(),
+             LoginScreenRoute(),
           );
-        }).showDialogBox(context);*/
+        }).showDialogBox(context);
   }
 
   @override

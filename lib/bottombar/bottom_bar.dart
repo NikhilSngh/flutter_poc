@@ -45,8 +45,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
-      selectedItemColor: Colors.indigo,
-      backgroundColor: Colors.white,
     );
   }
 
