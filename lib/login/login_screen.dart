@@ -10,7 +10,6 @@ import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/login/app_elevated_button.dart';
 import 'package:flutter_poc/login/common_textfield.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
-import 'package:flutter_poc/theme/ui_colors.dart';
 import 'package:flutter_poc/utils/validator.dart';
 import 'bloc/login_cubit.dart';
 import 'bloc/state/login_state.dart';
@@ -101,24 +100,9 @@ class LoginScreen extends StatelessWidget {
                                           }),
                                         );
                                       }),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text(AppStrings.dontHaveAccount,
-                                            style: TextStyle(fontSize: AppFontSize.regular, fontWeight: FontWeight.w400)),
-                                        InkWell(
-                                            onTap: (){
-                                              context.router.push(SignupScreenRoute());
-                                            },
-                                            child: Container(
-                                              margin: const EdgeInsets.only(left: SpacingConstant.loginWidgetHorizontalSpacing10),
-                                              child: Text(AppStrings.signUp,
-                                                  style:  TextStyle(fontSize: AppFontSize.regular,
-                                                      fontWeight: FontWeight.w700,
-                                                      color: UiColors.primaryTextColor.lightColor)),
-                                            )
-                                        )
-                                      ])
+                                  AppElevatedButton(title: AppStrings.signUp, onPressed: () {
+                                    context.router.push(SignupScreenRoute());
+                                  }),
                                 ])
                         )
                     )

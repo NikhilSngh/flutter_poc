@@ -14,20 +14,25 @@ class UiTheme {
       textTheme: UiTextStyles.defaultWhiteTextTheme,
       cardTheme: _cardTheme(),
       elevatedButtonTheme: _buttonTheme(),
-      bottomNavigationBarTheme: _bottomNavigationBarTheme());
+      bottomNavigationBarTheme: _bottomNavigationBarTheme(),
+      scaffoldBackgroundColor : UiColors.greyColor.lightColor
+  );
 
   static ThemeData darkTheme = ThemeData(
       brightness: Brightness.dark,
       fontFamily: 'Inter',
       appBarTheme: _appBarThemeData(Brightness.dark),
       textTheme: UiTextStyles.defaultDarkTextTheme,
-      cardTheme: _cardTheme());
+      cardTheme: _cardTheme(),
+      elevatedButtonTheme: _buttonTheme(),
+      bottomNavigationBarTheme: _bottomNavigationBarTheme(),
+      scaffoldBackgroundColor : UiColors.greyColor.lightColor);
 
   static AppBarTheme _appBarThemeData(Brightness brightness) {
     return AppBarTheme(
       backgroundColor: UiColors.appBarColor[brightness],
       iconTheme:
-          IconThemeData(color: UiColors.primaryTextColorWhite[brightness]),
+      IconThemeData(color: UiColors.primaryTextColorWhite[brightness]),
       systemOverlayStyle: SystemUiOverlayStyle(
           statusBarBrightness: brightness,
           statusBarIconBrightness: brightness == Brightness.dark
@@ -35,7 +40,7 @@ class UiTheme {
               : Brightness.dark,
           statusBarColor: Colors.transparent),
       titleTextStyle:
-          TextStyle(color: UiColors.primaryTextColorWhite[brightness]),
+      TextStyle(color: UiColors.primaryTextColorWhite[brightness]),
     );
   }
 
@@ -55,9 +60,9 @@ class UiTheme {
 
   static BottomNavigationBarThemeData _bottomNavigationBarTheme() {
     return BottomNavigationBarThemeData(
-          selectedItemColor: UiColors.bottomBarColor.lightColor,
-          backgroundColor: Colors.white
-        );
+        selectedItemColor: UiColors.bottomBarColor.lightColor,
+        backgroundColor: Colors.white
+    );
   }
 
   static CardTheme _cardTheme() {
