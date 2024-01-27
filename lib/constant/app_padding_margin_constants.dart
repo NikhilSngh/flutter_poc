@@ -1,5 +1,5 @@
 
-class AppPaddings {
+class AppPaddingMarginConstant {
   static const double mini = 4;
   static const double extraSmall = 8;
   static const double small = 12;

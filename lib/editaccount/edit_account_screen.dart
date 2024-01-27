@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/constant/app_constant.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
-import 'package:flutter_poc/constant/padding_constants.dart';
+import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/editaccount/edit_acount_cubit.dart';
 import 'package:flutter_poc/editaccount/edit_acount_state.dart';
@@ -71,8 +71,8 @@ class EditAccount extends StatelessWidget {
                 child: SingleChildScrollView(
                     child: Padding(
                         padding: const EdgeInsets.only(
-                            left: AppPaddings.regular,
-                            right: AppPaddings.regular),
+                            left: AppPaddingMarginConstant.regular,
+                            right: AppPaddingMarginConstant.regular),
                         child: Form(
                             key: _formKey,
                             child: Column(

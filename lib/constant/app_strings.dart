@@ -1,5 +1,6 @@
 
 class AppStrings{
+  static const String login = "Login";
   static const String logout = "Log Out";
   static const String logoutMessage = "Are you sure to logout";
   static const String account = "account";
@@ -12,5 +13,13 @@ class AppStrings{
   static const String name = "name";
   static const String dobMessage = "date of birth required";
   static const String editAccount = "Edit account";
+  static const String signInToContinue = "Sign In To Continue";
+  static const String enterEmailAddress = "Enter Email Address";
+  static const String enterPassword = "Enter Password";
+  static const String dontHaveAccount = "Don't Have Account";
+  static const String signUp = "Sign Up";
+
+
+
 
 }

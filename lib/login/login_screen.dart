@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/constant/app_constant.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/font_size_constants.dart';
+import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/login/app_elevated_button.dart';
 import 'package:flutter_poc/login/common_textfield.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
-import 'package:flutter_poc/theme/sizes.dart';
 import 'package:flutter_poc/theme/ui_colors.dart';
 import 'package:flutter_poc/utils/validator.dart';
 import 'bloc/login_cubit.dart';
@@ -33,12 +34,12 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider<LoginCubit>(
         create: (context)=> cubit,
         child:Scaffold(
-            appBar: AppBar(title: const Text("Login")),
+            appBar: AppBar(title: const Text(AppStrings.login)),
             body: Center(
                 child: SingleChildScrollView(
                     child: Padding(
-                        padding: const EdgeInsets.only(left: Sizes.size16,
-                            right: Sizes.size16),
+                        padding: const EdgeInsets.only(left: AppPaddingMarginConstant.regular,
+                            right: AppPaddingMarginConstant.regular),
                         child:Form(
                             key: _formKey,
                             child: Column(
@@ -48,20 +49,20 @@ class LoginScreen extends StatelessWidget {
                                   //Image.asset('assets/images/man.png'),
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.loginWidgetVerticalSpacing10),
-                                    child: const Text("Login",
+                                    child: const Text(AppStrings.login,
                                         style: TextStyle(fontSize: AppFontSize.extraLarge,
                                             fontWeight: FontWeight.w600)),
                                   ),
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.loginWidgetVerticalSpacing10),
-                                    child: const Text("Sign In To Continue",
+                                    child: const Text(AppStrings.signInToContinue,
                                         style: TextStyle(fontSize: AppFontSize.regular,
                                             fontWeight: FontWeight.w400)),
                                   ),
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.loginWidgetVerticalSpacing10),
                                     child: AppTextField(
-                                      label: "email address",
+                                      label: AppStrings.enterEmailAddress,
                                       controller: _emailController,
                                       validator: (value) {
                                         return Validator.isEmailValid(context, email: value);
@@ -72,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.loginWidgetVerticalSpacing10),
                                     child: AppTextField(
-                                        label: "password",
+                                        label: AppStrings.enterPassword,
                                         controller: _passwordController,
                                         isPassword: true,
                                         validator: (value) {
@@ -95,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                                       builder: (context, state) {
                                         return Container(
                                           margin: const EdgeInsets.only(bottom: SpacingConstant.loginWidgetVerticalSpacing10),
-                                          child: AppElevatedButton(title: "Login", onPressed: () {
+                                          child: AppElevatedButton(title: AppStrings.login, onPressed: () {
                                             _validateForm();
                                           }),
                                         );
@@ -103,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                                   Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        const Text("Don't Have Account",
+                                        const Text(AppStrings.dontHaveAccount,
                                             style: TextStyle(fontSize: AppFontSize.regular, fontWeight: FontWeight.w400)),
                                         InkWell(
                                             onTap: (){
@@ -111,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                                             },
                                             child: Container(
                                               margin: const EdgeInsets.only(left: SpacingConstant.loginWidgetHorizontalSpacing10),
-                                              child: Text("Sign Up",
+                                              child: Text(AppStrings.signUp,
                                                   style:  TextStyle(fontSize: AppFontSize.regular,
                                                       fontWeight: FontWeight.w700,
                                                       color: UiColors.primaryTextColor.lightColor)),
