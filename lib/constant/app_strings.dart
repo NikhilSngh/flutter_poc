@@ -15,9 +15,14 @@ class AppStrings{
   static const String editAccount = "Edit account";
   static const String signInToContinue = "Sign In To Continue";
   static const String enterEmailAddress = "Enter Email Address";
-  static const String enterPassword = "Enter Password";
   static const String dontHaveAccount = "Don't Have Account";
   static const String signUp = "Sign Up";
+  static const String enterName  = "Enter Name";
+  static const String enterEmail  = "Enter Email Address";
+  static const String enterDob  = "Enter Dob";
+  static const String enterPassword = "Enter Password";
+  static const String confirmPassword = "Confirm Password";
+  static const String dobIsRequired = "Dob is Password";
 
 
 

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/constant/app_constant.dart';
+import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/helper/common_radio_button.dart';
 import 'package:flutter_poc/login/app_elevated_button.dart';
@@ -13,7 +15,6 @@ import 'dart:io';
 import 'package:flutter_poc/signup/bloc/signup_cubit.dart';
 import 'package:flutter_poc/signup/bloc/state/signup_state.dart';
 import 'package:flutter_poc/signup/profile_Image.dart';
-import 'package:flutter_poc/theme/sizes.dart';
 import 'package:flutter_poc/utils/date_picker.dart';
 import 'package:flutter_poc/utils/validator.dart';
 
@@ -26,37 +27,20 @@ class SignupScreen extends StatelessWidget {
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _confirmPasswordEditingController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final SignupCubit _signupCubit = SignupCubit();
   final ValueNotifier<String> _gender = ValueNotifier<String>("");
-  File? _pickedImage;
-
-  void _validateForm() async {
-    if (_formKey.currentState?.validate() == true) {
-      SystemChannels.textInput.invokeMethod("TextInput.hide");
-      Map<String, dynamic> params = {LoginApiKeys.email: _emailEditingController.text,
-        LoginApiKeys.password: _passwordEditingController.text,
-        LoginApiKeys.name: _nameEditingController.text,
-        LoginApiKeys.dob: _dobEditingController.text,
-        LoginApiKeys.gender: _gender.value
-      };
-      if (_pickedImage != null) {
-        params[LoginApiKeys.image] = _pickedImage;
-      }
-      _signupCubit.signup(params);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    File? pickedImage;
     return BlocProvider<SignupCubit>(
-        create: (context)=> _signupCubit,
+        create: (context)=> SignupCubit(),
         child:Scaffold(
-            appBar: AppBar(title: const Text("Sign Up")),
+            appBar: AppBar(title: const Text(AppStrings.signUp)),
             body: SafeArea(
                 child: SingleChildScrollView(
                     child: Padding(
-                        padding: const EdgeInsets.only(left: Sizes.size16,
-                            right: Sizes.size16),
+                        padding: const EdgeInsets.only(left: AppPaddingMarginConstant.regular,
+                            right: AppPaddingMarginConstant.regular),
                         child:Form(
                             key: _formKey,
                             child: Column(
@@ -67,15 +51,15 @@ class SignupScreen extends StatelessWidget {
                                       valueListenable: _gender,
                                       builder: (context, value, _) {
                                         return ProfileImage(pickerImage: (image) {
-                                          _pickedImage = image;
+                                          pickedImage = image;
                                         }, gender: _gender.value);
                                       }
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.only(bottom: SpacingConstant.signupWidgetVerticalSpacing10,
-                                    top: SpacingConstant.signupWidgetVerticalSpacing10),
+                                    margin: const EdgeInsets.only(bottom: AppPaddingMarginConstant.small,
+                                    top: AppPaddingMarginConstant.small),
                                     child: AppTextField(
-                                        label: "name",
+                                        label: AppStrings.enterName,
                                         controller: _nameEditingController,
                                         validator: (value) {
                                           return Validator.isValidName(context, name: value);
@@ -86,7 +70,7 @@ class SignupScreen extends StatelessWidget {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.signupWidgetVerticalSpacing10,),
                                     child: AppTextField(
-                                        label: "emailAddress",
+                                        label: AppStrings.enterEmail,
                                         controller: _emailEditingController,
                                         validator: (value) {
                                           return Validator.isEmailValid(context, email: value);
@@ -97,7 +81,7 @@ class SignupScreen extends StatelessWidget {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.signupWidgetVerticalSpacing10,),
                                     child: AppTextField(
-                                        label: "dob",
+                                        label: AppStrings.dob,
                                         readOnly: true,
                                         onTap: () {
                                           DatePicker(context,date: (date){
@@ -106,7 +90,7 @@ class SignupScreen extends StatelessWidget {
                                         },
                                         controller: _dobEditingController,
                                         validator: (value) {
-                                          return Validator.emptyValidate(context, value: value, message: "dobIsRequired");
+                                          return Validator.emptyValidate(context, value: value, message: AppStrings.dobIsRequired);
 
                                         },
                                         inputType: TextInputType.emailAddress),
@@ -115,7 +99,7 @@ class SignupScreen extends StatelessWidget {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.signupWidgetVerticalSpacing10,),
                                     child: AppTextField(
-                                        label: "password",
+                                        label: AppStrings.enterPassword,
                                         controller: _passwordEditingController,
                                         isPassword: true,
                                         validator: (value) {
@@ -126,7 +110,7 @@ class SignupScreen extends StatelessWidget {
                                   Container(
                                     margin: const EdgeInsets.only(bottom: SpacingConstant.signupWidgetVerticalSpacing10,),
                                     child: AppTextField(
-                                        label: "confirmPassword",
+                                        label: AppStrings.confirmPassword,
                                         controller: _confirmPasswordEditingController,
                                         isPassword: true,
                                         validator: (value) {
@@ -153,7 +137,7 @@ class SignupScreen extends StatelessWidget {
                                       },
                                       builder: (context, state) {
                                         return AppElevatedButton(title: "signUp", onPressed: () {
-                                          _validateForm();
+                                          _validateForm(context.read<SignupCubit>(),pickedImage);
                                         });
                                       })
                                 ])
@@ -163,5 +147,21 @@ class SignupScreen extends StatelessWidget {
             )
         )
     );
+  }
+
+  void _validateForm(SignupCubit signupCubit, File? pickedImage) async {
+    if (_formKey.currentState?.validate() == true) {
+      SystemChannels.textInput.invokeMethod("TextInput.hide");
+      Map<String, dynamic> params = {LoginApiKeys.email: _emailEditingController.text,
+        LoginApiKeys.password: _passwordEditingController.text,
+        LoginApiKeys.name: _nameEditingController.text,
+        LoginApiKeys.dob: _dobEditingController.text,
+        LoginApiKeys.gender: _gender.value
+      };
+      if (pickedImage != null) {
+        params[LoginApiKeys.image] = pickedImage;
+      }
+      signupCubit.signup(params);
+    }
   }
 }
