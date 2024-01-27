@@ -9,10 +9,12 @@ import 'package:flutter_poc/utils/file_manager.dart';
 import 'package:path/path.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  SignupCubit() : super(SignupInitialState());
+  final AppSharedPref sharedInstance;
+  final FileManager fileManager;
+  SignupCubit({required this.sharedInstance, required this.fileManager}) : super(SignupInitialState());
 
   void signup(Map request) async {
-    var sharedInstance = serviceLocator<AppSharedPref>();
+
     sharedInstance.setString(
         key: AppSharedPrefKey.fullName, value: request[LoginApiKeys.name]);
     sharedInstance.setString(
