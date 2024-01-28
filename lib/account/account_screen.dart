@@ -73,7 +73,9 @@ class _AccountScreenState extends State<AccountScreen> {
               icon: const Icon(Icons.edit),
               tooltip: AppStrings.edit,
               onPressed: () {
-                context.router.push(EditAccountRoute());
+                context.router.push(EditAccountRoute(
+                  isUpdated: () => {getProfileData()},
+                ));
               },
             ),
           ],
@@ -93,8 +95,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         child: CircleAvatar(
                           child: imageFile != null
                               ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                      Sizes.size50),
+                                  borderRadius:
+                                      BorderRadius.circular(Sizes.size50),
                                   child: Image.file(imageFile!,
                                       fit: BoxFit.cover,
                                       height: Sizes.size100,

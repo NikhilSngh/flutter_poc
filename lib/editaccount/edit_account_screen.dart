@@ -27,9 +27,10 @@ class EditAccount extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final EditAccountCubit _accountCubit = EditAccountCubit();
   final ValueNotifier<String> _gender = ValueNotifier<String>("");
+  final Function isUpdated;
   File? _pickedImage;
 
-  EditAccount({super.key}) {
+  EditAccount({super.key,required this.isUpdated}) {
     var sharedInstance = serviceLocator<AppSharedPref>();
     FileManager fileManager = serviceLocator<FileManager>();
     fileManager
@@ -154,6 +155,7 @@ class EditAccount extends StatelessWidget {
                                         listener: (context, state) {
                                       if (state is SuccessState) {
                                         context.router.pop();
+                                        isUpdated.call();
                                       }
                                     }, builder: (context, state) {
                                       return AppElevatedButton(
