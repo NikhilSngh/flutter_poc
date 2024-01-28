@@ -24,6 +24,8 @@ class AppStrings{
   static const String confirmPassword = "Confirm Password";
   static const String dobIsRequired = "Dob is Password";
   static const String edit = "Edit";
+  static const  String favourites = "Favourites";
+  static const String noFavouritesSelected = "No Favourites Selected";
 
 
 

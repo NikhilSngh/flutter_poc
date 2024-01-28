@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                                     movie: state.gridList![index],
                                     bannerWidget: Image.network(
                                         "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                                    isGridView: true,
+                                    isFromHomeView: true,
                                     isFavourite: state.favorite
                                         .map((item) => item)
                                         .contains(state.gridList![index].id),

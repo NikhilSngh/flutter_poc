@@ -11,14 +11,14 @@ class MovieItemWidget extends StatelessWidget {
       required this.context,
       required this.movie,
       required this.bannerWidget,
-      required this.isGridView,
+      required this.isFromHomeView,
       required this.isFavourite,
       required this.favClickAction});
 
   final BuildContext context;
   final Movie movie;
   final Widget bannerWidget;
-  final bool isGridView;
+  final bool isFromHomeView;
   final Function favClickAction;
   bool isFavourite;
 
@@ -48,7 +48,7 @@ class MovieItemWidget extends StatelessWidget {
                         child: BlocBuilder<WishListCubit, WishListState>(
                             builder: (context, state) {
                           if (state is WishListSuccess) {
-                            isFavourite = state.isFavourite;
+                            if (isFromHomeView) isFavourite = state.isFavourite;
                             favClickAction.call();
                           }
                           return Icon(
@@ -85,8 +85,8 @@ class MovieItemWidget extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: isGridView ? Sizes.size4 : Sizes.size16,
+            const SizedBox(
+              height:  Sizes.size4,
             ),
             Text(movie.title ?? '',
                 maxLines: 1, style: Theme.of(context).textTheme.titleSmall)
