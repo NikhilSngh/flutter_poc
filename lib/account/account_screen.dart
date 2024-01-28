@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_poc/account/accountInfo_widget.dart';
 import 'package:flutter_poc/account/accountcard_widget.dart';
 import 'package:flutter_poc/account/app_alert.dart';
+import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
-import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/theme/sizes.dart';
@@ -71,7 +71,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.edit),
-              tooltip: 'edit',
+              tooltip: AppStrings.edit,
               onPressed: () {
                 context.router.push(EditAccountRoute());
               },
@@ -81,9 +81,9 @@ class _AccountScreenState extends State<AccountScreen> {
         body: SingleChildScrollView(
             child: Padding(
                 padding: const EdgeInsets.only(
-                    left: SpacingConstant.paddingAccount,
-                    right: SpacingConstant.paddingAccount,
-                    top: SpacingConstant.paddingAccount),
+                    left: AppPaddingMarginConstant.small,
+                    right: AppPaddingMarginConstant.small,
+                    top: AppPaddingMarginConstant.small),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

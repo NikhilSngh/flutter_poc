@@ -23,6 +23,7 @@ class AppStrings{
   static const String enterPassword = "Enter Password";
   static const String confirmPassword = "Confirm Password";
   static const String dobIsRequired = "Dob is Password";
+  static const String edit = "Edit";
 
 
 
