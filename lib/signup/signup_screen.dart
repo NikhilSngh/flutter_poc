@@ -170,7 +170,7 @@ class SignupScreen extends StatelessWidget {
                                     }
                                   }, builder: (context, state) {
                                     return AppElevatedButton(
-                                        title: "signUp",
+                                        title: AppStrings.signUp,
                                         onPressed: () {
                                           _validateForm(
                                               context.read<SignupCubit>(),

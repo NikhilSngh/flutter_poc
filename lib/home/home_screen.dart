@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +15,8 @@ import 'package:flutter_poc/theme/sizes.dart';
 class HomeScreen extends StatelessWidget {
   var isFav = false;
 
-     HomeScreen({super.key});
+  HomeScreen({super.key});
+
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -24,7 +24,8 @@ class HomeScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeCubit>(
-          create: (BuildContext context) => HomeCubit(HomeRepository())..loadFirstTwoPageOfMovie(),
+          create: (BuildContext context) =>
+              HomeCubit(HomeRepository())..loadFirstTwoPageOfMovie(),
         ),
       ],
       child: Scaffold(
@@ -33,65 +34,72 @@ class HomeScreen extends StatelessWidget {
           child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
             return state is HomeLoaded
                 ? SingleChildScrollView(
-              controller: initScrollListener(context),
-              padding: const EdgeInsets.only(bottom: Sizes.size16),
-              child: Column(
-                children: [
-                  CarouselView((state.carouselList!.length>10)?
-                  state.carouselList!.sublist(0,10):[]),
-                  GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 1.3, crossAxisCount: 2),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: (){
-                          context.router.push(DetailScreenRoute(movie: state.gridList![index]));
-                        },
-                        child: BlocProvider<WishListCubit>(
-                        create: (BuildContext context) => WishListCubit(),
-                      child:MovieItemWidget(
-                              context: context,
-                              movie: state.gridList![index],
-                              bannerWidget: Image.network(
-                                  "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                              isGridView: true, isFavourite: state.favorite.map((item) => item).
-                      contains(state.gridList![index].id),),
+                    controller: initScrollListener(context),
+                    padding: const EdgeInsets.only(bottom: Sizes.size16),
+                    child: Column(
+                      children: [
+                        CarouselView((state.carouselList!.length > 10)
+                            ? state.carouselList!.sublist(0, 10)
+                            : []),
+                        GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 1.3, crossAxisCount: 2),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                context.router.push(DetailScreenRoute(
+                                    movie: state.gridList![index]));
+                              },
+                              child: BlocProvider<WishListCubit>(
+                                create: (BuildContext context) =>
+                                    WishListCubit(),
+                                child: MovieItemWidget(
+                                    context: context,
+                                    movie: state.gridList![index],
+                                    bannerWidget: Image.network(
+                                        "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
+                                    isGridView: true,
+                                    isFavourite: state.favorite
+                                        .map((item) => item)
+                                        .contains(state.gridList![index].id),
+                                    favClickAction: () => {}),
+                              ),
+                            );
+                          },
+                          itemCount: state.gridList?.length,
                         ),
-                      );
-                    },
-                    itemCount: state.gridList?.length,
-                  ),
-                  Padding(
-                    padding:
-                    const EdgeInsets.only(bottom: Sizes.size16),
-                    child: state.isReachedEnd
-                        ? const CircularProgressIndicator()
-                        : Container(),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: Sizes.size16),
+                          child: state.isReachedEnd
+                              ? const CircularProgressIndicator()
+                              : Container(),
+                        )
+                      ],
+                    ),
                   )
-                ],
-              ),
-            )
                 : state is HomeLoading
-                ? const Center(child: CircularProgressIndicator())
-                : state is HomeError
-                ? Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_sharp,
-                  color: Colors.red,),
-                  const SizedBox(
-                    height: Sizes.size16,
-                  ),
-                  Text(state.errorMessage)
-                ],
-              ),
-            )
-                : Container();
+                    ? const Center(child: CircularProgressIndicator())
+                    : state is HomeError
+                        ? Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.error_sharp,
+                                  color: Colors.red,
+                                ),
+                                const SizedBox(
+                                  height: Sizes.size16,
+                                ),
+                                Text(state.errorMessage)
+                              ],
+                            ),
+                          )
+                        : Container();
           }),
         ),
       ),

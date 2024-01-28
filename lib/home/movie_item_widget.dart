@@ -5,21 +5,21 @@ import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/theme/sizes.dart';
 
-
 class MovieItemWidget extends StatelessWidget {
-   MovieItemWidget({
-    super.key,
-    required this.context,
-    required this.movie,
-    required this.bannerWidget,
-    required this.isGridView,
-    required this.isFavourite
-  });
+  MovieItemWidget(
+      {super.key,
+      required this.context,
+      required this.movie,
+      required this.bannerWidget,
+      required this.isGridView,
+      required this.isFavourite,
+      required this.favClickAction});
 
   final BuildContext context;
   final Movie movie;
   final Widget bannerWidget;
   final bool isGridView;
+  final Function favClickAction;
   bool isFavourite;
 
   @override
@@ -45,18 +45,18 @@ class MovieItemWidget extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: Padding(
                         padding: const EdgeInsets.all(Sizes.size5),
-                        child: BlocBuilder<WishListCubit,WishListState>(
-                          builder: (context, state){
-                            if(state is WishListSuccess){
-                              isFavourite = state.isFavourite;
-                            }
-                           return Icon(
-                             Icons.star_border,
-                             color: isFavourite ? Colors.blueAccent : Colors
-                                 .white,
-                           );
+                        child: BlocBuilder<WishListCubit, WishListState>(
+                            builder: (context, state) {
+                          if (state is WishListSuccess) {
+                            isFavourite = state.isFavourite;
+                            favClickAction.call();
                           }
-                        ),
+                          return Icon(
+                            Icons.star_border,
+                            color:
+                                isFavourite ? Colors.blueAccent : Colors.white,
+                          );
+                        }),
                       ),
                     ),
                   ),
@@ -65,7 +65,7 @@ class MovieItemWidget extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     decoration:
-                    BoxDecoration(color: Colors.black.withOpacity(0.15)),
+                        BoxDecoration(color: Colors.black.withOpacity(0.15)),
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: Sizes.size16, right: Sizes.size16),
@@ -74,16 +74,10 @@ class MovieItemWidget extends StatelessWidget {
                         children: [
                           Text(
                             movie.getContentRating(),
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .titleSmall,
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           Text(movie.originalLanguage?.toUpperCase() ?? '',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .titleSmall)
+                              style: Theme.of(context).textTheme.titleSmall)
                         ],
                       ),
                     ),
@@ -95,11 +89,7 @@ class MovieItemWidget extends StatelessWidget {
               height: isGridView ? Sizes.size4 : Sizes.size16,
             ),
             Text(movie.title ?? '',
-              maxLines: 1,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleSmall)
+                maxLines: 1, style: Theme.of(context).textTheme.titleSmall)
           ],
         ),
       ),
