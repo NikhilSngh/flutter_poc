@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_poc/login/app_elevated_button.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
+import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:flutter_poc/theme/ui_colors.dart';
 
 
@@ -13,7 +14,7 @@ class AppAlert {
   const AppAlert(
       {this.title = '',
       this.message,
-      this.confirmBtnText = 'OK',
+      this.confirmBtnText = AppStrings.ok,
       this.isNeedConfirmBtn = true,
       this.cancelTap,
       this.confirmTap});
@@ -34,7 +35,7 @@ class AppAlert {
                   .titleSmall),
               actions: [
                 AppTextButton(
-                    title: 'Cancel',
+                    title: AppStrings.cancel,
                     textColor: UiColors.primaryTextColorWhite.lightColor,
                     onPressed: () {
                       Navigator.of(context).pop();

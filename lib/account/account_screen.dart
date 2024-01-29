@@ -9,6 +9,7 @@ import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/pref_key.dart';
+import 'package:flutter_poc/gen/assets.gen.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/theme/sizes.dart';
@@ -104,11 +105,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                       width: Sizes.size100))
                               : ClipOval(
                                   child: gender == AppStrings.other
-                                      ? Image.asset('assets/images/other.png')
+                                      ? Assets.images.other.image()
                                       : gender == AppStrings.male
-                                          ? Image.asset('assets/images/man.png')
-                                          : Image.asset(
-                                              'assets/images/woman.png')),
+                                          ? Assets.images.man.image()
+                                          : Assets.images.woman.image()),
                         ),
                       ),
                       Center(

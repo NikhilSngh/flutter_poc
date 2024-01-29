@@ -13,8 +13,8 @@ import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/editaccount/edit_acount_cubit.dart';
 import 'package:flutter_poc/editaccount/edit_acount_state.dart';
 import 'package:flutter_poc/helper/common_radio_button.dart';
-import 'package:flutter_poc/login/app_elevated_button.dart';
-import 'package:flutter_poc/login/common_textfield.dart';
+import 'package:flutter_poc/helper/app_text_button.dart';
+import 'package:flutter_poc/helper/app_textfield.dart';
 import 'package:flutter_poc/signup/profile_Image.dart';
 import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/utils/date_picker.dart';
@@ -160,7 +160,7 @@ class EditAccount extends StatelessWidget {
                                       }
                                     }, builder: (context, state) {
                                       return AppElevatedButton(
-                                        title: 'update',
+                                        title: AppStrings.update,
                                         onPressed: () {
                                           _validateForm();
                                         },

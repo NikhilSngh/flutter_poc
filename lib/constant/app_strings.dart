@@ -30,7 +30,9 @@ class AppStrings{
   static const String rating = "Rating : ";
   static const String like  = "Like";
   static const String home  = "Home";
-
+ static const String update = "Update";
+ static const String cancel = "Cancel";
+ static const String ok = "OK";
 
 
 

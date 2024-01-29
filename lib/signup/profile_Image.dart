@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
+import 'package:flutter_poc/gen/assets.gen.dart';
 import 'package:flutter_poc/signup/image_picker.dart';
 
 import 'dart:io';
@@ -32,8 +34,7 @@ class _ProfileImageState extends State<ProfileImage> {
               alignment: AlignmentDirectional.center,
               decoration: BoxDecoration(
                 border: Border.all(
-                    color: UiColors.primaryTextColor.lightColor ??
-                        Color(0xFFD9177F),
+                    color: UiColors.primaryTextColor.lightColor!,
                     width: 2.0),
                 borderRadius: BorderRadius.circular(Sizes.size50),
               ),
@@ -44,11 +45,11 @@ class _ProfileImageState extends State<ProfileImage> {
                           fit: BoxFit.cover,
                           height: Sizes.size100,
                           width: Sizes.size100))
-                  : widget.gender == "other"
-                      ? Image.asset('assets/images/other.png')
-                      : widget.gender == "female"
-                          ? Image.asset('assets/images/woman.png')
-                          : Image.asset('assets/images/man.png'))),
+                  : widget.gender == AppStrings.other
+                      ? Assets.images.other.image()
+                      : widget.gender == AppStrings.female
+                          ? Assets.images.woman.image()
+                          : Assets.images.man.image())),
       Positioned(
           right: 0,
           top: 60,
