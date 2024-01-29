@@ -8,6 +8,7 @@ import 'package:flutter_poc/account/app_alert.dart';
 import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
+import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/theme/sizes.dart';
@@ -34,12 +35,12 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   getProfileData() async {
-    name = sharedInstance.getString(key: AppSharedPrefKey.fullName);
-    email = sharedInstance.getString(key: AppSharedPrefKey.email);
-    dob = sharedInstance.getString(key: AppSharedPrefKey.dob);
-    gender = sharedInstance.getString(key: AppSharedPrefKey.gender);
+    name = sharedInstance.getString(key: PrefKey.fullName);
+    email = sharedInstance.getString(key: PrefKey.email);
+    dob = sharedInstance.getString(key: PrefKey.dob);
+    gender = sharedInstance.getString(key: PrefKey.gender);
     imageFile = await fileManager
-        .getFile(sharedInstance.getString(key: AppSharedPrefKey.profileImage));
+        .getFile(sharedInstance.getString(key: PrefKey.profileImage));
     setState(() {});
   }
 
@@ -49,7 +50,7 @@ class _AccountScreenState extends State<AccountScreen> {
         message: AppStrings.logoutMessage,
         confirmBtnText: AppStrings.logout,
         confirmTap: () {
-          sharedInstance.remove(AppSharedPrefKey.loginStatus);
+          sharedInstance.remove(PrefKey.loginStatus);
           context.router.push(
             LoginScreenRoute(),
           );

@@ -1,47 +1,39 @@
+import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum AppSharedPrefKey {
-  email,
-  password,
-  loginStatus,
-  fullName,
-  dob,
-  gender,
-  profileImage,
-  lastActive
-}
+
 
 class AppSharedPref {
-  SharedPreferences? pref;
+  SharedPreferences? _pref;
   AppSharedPref() {
     _setup();
   }
 
   _setup() async{
-    pref  = await SharedPreferences.getInstance();
+    _pref  = await SharedPreferences.getInstance();
   }
 
-  setString({required AppSharedPrefKey key, required String value}) {
-    pref?.setString(key.name, value);
+  setString({required PrefKey key, required String value}) {
+    _pref?.setString(key.name, value);
   }
 
-  String getString({required AppSharedPrefKey key}) {
-    return pref?.getString(key.name) ?? "";
+  String getString({required PrefKey key}) {
+    return _pref?.getString(key.name) ?? "";
   }
 
-  setBool({required AppSharedPrefKey key, required bool value}) {
-    pref?.setBool(key.name, value);
+  setBool({required PrefKey key, required bool value}) {
+    _pref?.setBool(key.name, value);
   }
 
-  bool getBool({required AppSharedPrefKey key}) {
-    return pref?.getBool(key.name) ?? false;
+  bool getBool({required PrefKey key}) {
+    return _pref?.getBool(key.name) ?? false;
   }
 
-  void remove(AppSharedPrefKey key){
-    pref?.remove(key.name);
+  void remove(PrefKey key){
+    _pref?.remove(key.name);
   }
 
   void clear() async {
-    pref?.clear();
+    _pref?.clear();
   }
 }

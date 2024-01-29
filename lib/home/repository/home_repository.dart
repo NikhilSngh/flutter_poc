@@ -16,7 +16,7 @@ class HomeRepository {
     final response = await _apiService.getDataFromApi(
         endpoint: ApiUrl.GET_MOVIES,
         converter: MovieListModel.fromJson,
-        queryParams: {"api_key": AppConstant.API_KEY, "page": pageNo});
+        queryParams: {"api_key": AppConstant.apiKey, "page": pageNo});
     return response;
   }
 }

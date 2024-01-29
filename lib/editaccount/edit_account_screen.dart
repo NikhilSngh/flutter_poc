@@ -8,6 +8,7 @@ import 'package:flutter_poc/constant/app_constant.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
+import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/editaccount/edit_acount_cubit.dart';
 import 'package:flutter_poc/editaccount/edit_acount_state.dart';
@@ -34,17 +35,17 @@ class EditAccount extends StatelessWidget {
     var sharedInstance = serviceLocator<AppSharedPref>();
     FileManager fileManager = serviceLocator<FileManager>();
     fileManager
-        .getFile(sharedInstance.getString(key: AppSharedPrefKey.profileImage))
+        .getFile(sharedInstance.getString(key: PrefKey.profileImage))
         .then((value) {
       _pickedImage = value;
       _gender.value = "";
-      _gender.value = sharedInstance.getString(key: AppSharedPrefKey.gender);
+      _gender.value = sharedInstance.getString(key: PrefKey.gender);
     });
     _dobEditingController.text =
-        sharedInstance.getString(key: AppSharedPrefKey.dob);
+        sharedInstance.getString(key: PrefKey.dob);
     _nameEditingController.text =
-        sharedInstance.getString(key: AppSharedPrefKey.fullName);
-    _gender.value = sharedInstance.getString(key: AppSharedPrefKey.gender);
+        sharedInstance.getString(key: PrefKey.fullName);
+    _gender.value = sharedInstance.getString(key: PrefKey.gender);
   }
 
   void _validateForm() async {

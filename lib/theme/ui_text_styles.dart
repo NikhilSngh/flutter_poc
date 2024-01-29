@@ -1,4 +1,5 @@
  import 'package:flutter/material.dart';
+import 'package:flutter_poc/constant/app_font_constant.dart';
 import 'package:flutter_poc/theme/ui_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,14 +12,14 @@ class UiTextStyles{
    );
 
    static TextStyle getTitleSmall() => GoogleFonts.inter(
-       fontSize: 16,
+       fontSize: AppFontConstant.extraSmall,
        fontWeight: FontWeight.w500,
        letterSpacing: 0.14,
        color: Colors.white
    );
 
    static TextStyle getTitleExtraSmall() => GoogleFonts.inter(
-       fontSize: 16,
+       fontSize: AppFontConstant.extraSmall,
        fontWeight: FontWeight.w500,
        letterSpacing: 0.14,
        color: Colors.white
@@ -26,7 +27,7 @@ class UiTextStyles{
 
 
    static TextStyle _getTitleSmallDark() => GoogleFonts.inter(
-       fontSize: 20,
+       fontSize: AppFontConstant.extraSmall,
        fontWeight: FontWeight.w600,
        letterSpacing: 0.14,
        color:UiColors.informGreyColor.darkColor

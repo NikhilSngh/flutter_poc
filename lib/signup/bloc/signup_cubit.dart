@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/constant/app_constant.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
+import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:flutter_poc/signup/bloc/state/signup_state.dart';
 import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/utils/common_utility.dart';
@@ -16,15 +17,15 @@ class SignupCubit extends Cubit<SignupState> {
   void signup(Map request) async {
 
     sharedInstance.setString(
-        key: AppSharedPrefKey.fullName, value: request[LoginApiKeys.name]);
+        key: PrefKey.fullName, value: request[LoginApiKeys.name]);
     sharedInstance.setString(
-        key: AppSharedPrefKey.gender, value: request[LoginApiKeys.gender]);
+        key: PrefKey.gender, value: request[LoginApiKeys.gender]);
     sharedInstance.setString(
-        key: AppSharedPrefKey.dob, value: request[LoginApiKeys.dob]);
+        key: PrefKey.dob, value: request[LoginApiKeys.dob]);
     sharedInstance.setString(
-        key: AppSharedPrefKey.email, value: request[LoginApiKeys.email]);
+        key: PrefKey.email, value: request[LoginApiKeys.email]);
     sharedInstance.setString(
-        key: AppSharedPrefKey.password,
+        key: PrefKey.password,
         value: AppUtility.encrypt(
             AppConstant.encryptKey, request[LoginApiKeys.password])
             .base64);
@@ -32,9 +33,9 @@ class SignupCubit extends Cubit<SignupState> {
       FileManager fileManager = serviceLocator<FileManager>();
       var path = await fileManager.saveFile(request[LoginApiKeys.image]);
       sharedInstance.setString(
-          key: AppSharedPrefKey.profileImage, value: basename(path.path));
+          key: PrefKey.profileImage, value: basename(path.path));
     }
-    sharedInstance.setBool(key: AppSharedPrefKey.loginStatus, value: true);
+    sharedInstance.setBool(key: PrefKey.loginStatus, value: true);
     emit(SignupSuccessState());
   }
 }

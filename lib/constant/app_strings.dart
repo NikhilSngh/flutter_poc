@@ -3,7 +3,7 @@ class AppStrings{
   static const String login = "Login";
   static const String logout = "Log Out";
   static const String logoutMessage = "Are you sure to logout";
-  static const String account = "account";
+  static const String account = "Account";
   static const String other = "other";
   static const String emailAddress = "Email Address";
   static const String dob = "Dob";
@@ -29,6 +29,8 @@ class AppStrings{
   static const String releaseDate = "Release Date : ";
   static const String rating = "Rating : ";
   static const String like  = "Like";
+  static const String home  = "Home";
+
 
 
 

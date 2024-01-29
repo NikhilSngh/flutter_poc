@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/account/account_screen.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/favourite/bloc/cubit/favourite_cubit.dart';
 import 'package:flutter_poc/favourite/favourite_screen.dart';
 import 'package:flutter_poc/home/bloc/cubit/home_cubit.dart';
@@ -37,11 +38,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
     return BottomNavigationBar(
       items: const [
         BottomNavigationBarItem(
-            icon: Icon(Icons.home), label: "Home"),
+            icon: Icon(Icons.home), label: AppStrings.home),
         BottomNavigationBarItem(
-            icon: Icon(Icons.favorite), label: "favourites"),
+            icon: Icon(Icons.favorite), label: AppStrings.favourites),
         BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_sharp), label: "account"),
+            icon: Icon(Icons.account_circle_sharp), label: AppStrings.account),
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
