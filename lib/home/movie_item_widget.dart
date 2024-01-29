@@ -19,7 +19,7 @@ class MovieItemWidget extends StatelessWidget {
   final Movie movie;
   final Widget bannerWidget;
   final bool isFromHomeView;
-  final Function favClickAction;
+  final Function(bool) favClickAction;
   bool isFavourite;
 
   @override
@@ -49,7 +49,7 @@ class MovieItemWidget extends StatelessWidget {
                             builder: (context, state) {
                           if (state is WishListSuccess) {
                             if (isFromHomeView) isFavourite = state.isFavourite;
-                            favClickAction.call();
+                            favClickAction.call(isFavourite);
                           }
                           return Icon(
                             Icons.star_border,

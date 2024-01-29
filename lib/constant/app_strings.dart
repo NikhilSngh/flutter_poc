@@ -26,7 +26,9 @@ class AppStrings{
   static const String edit = "Edit";
   static const  String favourites = "Favourites";
   static const String noFavouritesSelected = "No Favourites Selected";
-
+  static const String releaseDate = "Release Date : ";
+  static const String rating = "Rating : ";
+  static const String like  = "Like";
 
 
 

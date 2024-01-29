@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 context.router.push(DetailScreenRoute(
-                                    movie: state.gridList![index]));
+                                    movie: state.gridList![index]),);
                               },
                               child: BlocProvider<WishListCubit>(
                                 create: (BuildContext context) =>
@@ -65,7 +65,9 @@ class HomeScreen extends StatelessWidget {
                                     isFavourite: state.favorite
                                         .map((item) => item)
                                         .contains(state.gridList![index].id),
-                                    favClickAction: () => {}),
+                                    favClickAction: (isFav) => {
+
+                                    }),
                               ),
                             );
                           },

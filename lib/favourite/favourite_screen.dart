@@ -43,7 +43,7 @@ class FavoriteScreen extends StatelessWidget {
                           ),
                           isFromHomeView: false,
                           isFavourite: true,
-                          favClickAction: () =>
+                          favClickAction: (isFav) =>
                               {context.read<FavouriteCubit>().getWishlist()},
                         ),
                       ),
