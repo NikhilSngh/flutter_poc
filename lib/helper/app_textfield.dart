@@ -50,7 +50,6 @@ class _AppTextFieldState extends State<AppTextField> {
       decoration: InputDecoration(
         isDense: true,
         label: Text("${widget.label} ${widget.required ? "*" : ""}"),
-        border: const OutlineInputBorder(),
         suffixIcon: widget.isPassword
             ? IconButton(
           icon: Icon(

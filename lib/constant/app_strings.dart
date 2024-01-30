@@ -33,4 +33,5 @@ class AppStrings {
   static const String cancel = "Cancel";
   static const String ok = "OK";
   static const String detail = "Detail";
+  static const String appTitle = "Movie Demo App";
 }

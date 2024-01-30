@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/sl/locator.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: AppStrings.appTitle,
       theme: UiTheme.lightTheme,
       darkTheme: UiTheme.darkTheme,
       routerConfig: _appRouter.config(),
