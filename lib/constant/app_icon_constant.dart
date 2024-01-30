@@ -7,4 +7,5 @@ class AppIconConstant {
   static const IconData home = Icons.home;
   static const IconData favorite = Icons.favorite;
   static const IconData accountCircleSharp = Icons.account_circle_sharp;
+
 }

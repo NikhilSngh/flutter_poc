@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/constant/app_icon_constant.dart';
 import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/data/network/api_url.dart';
@@ -10,14 +11,23 @@ import 'package:flutter_poc/theme/sizes.dart';
 @RoutePage()
 class DetailScreen extends StatelessWidget {
   final Movie movie;
-  const DetailScreen({Key? key, required this.movie})
-      : super(key: key);
+
+  const DetailScreen({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text(AppStrings.detail),
+          actions: [
+            Container(
+              margin: const EdgeInsets.only(right: AppPaddingMarginConstant.small),
+              child: Icon(
+                AppIconConstant.favorite,
+                color: movie.isFavSelected! ? Colors.red : Colors.grey,
+              ),
+            )
+          ],
         ),
         body: SafeArea(
           child: Padding(

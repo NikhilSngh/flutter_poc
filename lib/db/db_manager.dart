@@ -40,7 +40,8 @@ class DBManager {
             ${TableColumns.adult.name} INTEGER NULL,
             ${TableColumns.voteAverage.name} REAL NULL,
             ${TableColumns.popularity.name} REAL NULL,
-            ${TableColumns.voteCount.name} INTEGER NULL
+            ${TableColumns.voteCount.name} INTEGER NULL,
+            ${TableColumns.isFavSelected.name} INTEGER NULL
           )
           ''');
   }

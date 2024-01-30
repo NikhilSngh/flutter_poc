@@ -48,27 +48,20 @@ class HomeScreen extends StatelessWidget {
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   childAspectRatio: 1.3, crossAxisCount: 2),
                           itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                context.router.push(DetailScreenRoute(
-                                    movie: state.gridList![index]),);
-                              },
-                              child: BlocProvider<WishListCubit>(
-                                create: (BuildContext context) =>
-                                    WishListCubit(),
-                                child: MovieItemWidget(
-                                    context: context,
-                                    movie: state.gridList![index],
-                                    bannerWidget: Image.network(
-                                        "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                                    isFromHomeView: true,
-                                    isFavourite: state.favorite
-                                        .map((item) => item)
-                                        .contains(state.gridList![index].id),
-                                    favClickAction: (isFav) => {
+                            return BlocProvider<WishListCubit>(
+                              create: (BuildContext context) =>
+                                  WishListCubit(),
+                              child: MovieItemWidget(
+                                  movie: state.gridList![index],
+                                  bannerWidget: Image.network(
+                                      "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
+                                  isFromHomeView: true,
+                                  isFavourite: state.favorite
+                                      .map((item) => item)
+                                      .contains(state.gridList![index].id),
+                                  favClickAction: (isFav) => {
 
-                                    }),
-                              ),
+                                  },),
                             );
                           },
                           itemCount: state.gridList?.length,

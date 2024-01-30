@@ -11,5 +11,6 @@ enum TableColumns {
   voteAverage,
   language,
   poster,
-  popularity
+  popularity,
+  isFavSelected,
 }

@@ -34,7 +34,6 @@ class FavoriteScreen extends StatelessWidget {
                       child: BlocProvider<WishListCubit>(
                         create: (BuildContext context) => WishListCubit(),
                         child: MovieItemWidget(
-                          context: context,
                           movie: state.wishListItems[index],
                           bannerWidget: SizedBox(
                             height: Sizes.size90,
