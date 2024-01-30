@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_poc/account/accountInfo_widget.dart';
 import 'package:flutter_poc/account/accountcard_widget.dart';
 import 'package:flutter_poc/account/app_alert.dart';
+import 'package:flutter_poc/constant/app_icon_constant.dart';
 import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
@@ -65,14 +66,14 @@ class _AccountScreenState extends State<AccountScreen> {
           title: const Text(AppStrings.account),
           actions: [
             IconButton(
-              icon: const Icon(Icons.logout),
+              icon: const Icon(AppIconConstant.signOut),
               tooltip: AppStrings.logout,
               onPressed: () {
                 _logout();
               },
             ),
             IconButton(
-              icon: const Icon(Icons.edit),
+              icon: const Icon(AppIconConstant.edit),
               tooltip: AppStrings.edit,
               onPressed: () {
                 context.router.push(EditAccountRoute(

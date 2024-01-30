@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/constant/app_icon_constant.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/gen/assets.gen.dart';
 import 'package:flutter_poc/signup/image_picker.dart';
@@ -70,15 +71,13 @@ class _ProfileImageState extends State<ProfileImage> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(
-                      color: UiColors.primaryTextColor.lightColor ??
-                          const Color(0xFFD9177F),
+                      color: UiColors.primaryTextColor.lightColor!,
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(Sizes.size15),
                   ),
-                  child: Icon(Icons.edit,
-                      color: UiColors.primaryTextColor.lightColor ??
-                          const Color(0xFFD9177F),
+                  child: Icon(AppIconConstant.edit,
+                      color: UiColors.primaryTextColor.lightColor,
                       size: Sizes.size20))))
     ]);
   }
