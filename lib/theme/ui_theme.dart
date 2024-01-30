@@ -19,7 +19,7 @@ class UiTheme {
   );
 
   static ThemeData darkTheme = ThemeData(
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       fontFamily: 'Inter',
       appBarTheme: _appBarThemeData(Brightness.dark),
       textTheme: UiTextStyles.defaultDarkTextTheme,
