@@ -17,7 +17,7 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Detail"),
+          title: const Text(AppStrings.detail),
         ),
         body: SafeArea(
           child: Padding(
@@ -25,7 +25,7 @@ class DetailScreen extends StatelessWidget {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               SizedBox(
-                height: 200,
+                height: Sizes.size200,
                 child: Image.network(
                   ApiUrl.IMAGE_BASE_URL + movie.backdropPath.toString(),
                   fit: BoxFit.contain,

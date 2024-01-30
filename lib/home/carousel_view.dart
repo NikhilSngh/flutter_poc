@@ -117,7 +117,7 @@ class _CarouselViewState extends State<CarouselView> with SingleTickerProviderSt
                   ApiUrl.IMAGE_BASE_URL +
                       widget.movieList[index].backdropPath.toString(),
                   fit: BoxFit.contain,
-                  height: 200,
+                  height: Sizes.size200,
                 )
               );
             }),

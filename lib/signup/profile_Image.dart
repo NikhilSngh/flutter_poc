@@ -36,7 +36,7 @@ class _ProfileImageState extends State<ProfileImage> {
               decoration: BoxDecoration(
                 border: Border.all(
                     color: UiColors.primaryTextColor.lightColor!,
-                    width: 2.0),
+                    width: Sizes.size2),
                 borderRadius: BorderRadius.circular(Sizes.size50),
               ),
               child: widget.pickedImage != null
@@ -52,8 +52,8 @@ class _ProfileImageState extends State<ProfileImage> {
                           ? Assets.images.woman.image()
                           : Assets.images.man.image())),
       Positioned(
-          right: 0,
-          top: 60,
+          right: Sizes.size0,
+          top: Sizes.size60,
           child: InkWell(
               onTap: () {
                 AppImagePicker(context, pickerImage: (image) {
@@ -72,7 +72,7 @@ class _ProfileImageState extends State<ProfileImage> {
                     color: Colors.white,
                     border: Border.all(
                       color: UiColors.primaryTextColor.lightColor!,
-                      width: 1.0,
+                      width: Sizes.size1,
                     ),
                     borderRadius: BorderRadius.circular(Sizes.size15),
                   ),
