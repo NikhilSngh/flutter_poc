@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_poc/constant/app_icon_constant.dart';
 import 'package:flutter_poc/home/bloc/cubit/wish_list_cubit.dart';
 import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
@@ -60,9 +61,9 @@ class MovieItemWidget extends StatelessWidget {
                               favClickAction.call(isFavourite);
                             }
                             return Icon(
-                              Icons.star_border,
+                              AppIconConstant.favorite,
                               color:
-                                  isFavourite ? Colors.blueAccent : Colors.white,
+                                  isFavourite ? Colors.red : Colors.grey,
                             );
                           }),
                         ),

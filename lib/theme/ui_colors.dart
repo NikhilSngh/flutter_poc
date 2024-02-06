@@ -9,8 +9,8 @@ class UiColors{
   static const Color _pureDark = Color(0xFF000000);
   static const Color _informGrey = Color(0xFF191919);
   static const Color _blue = Color(0xFF394094);
-  static const Color _grey = Color(0xFFCCCCCC);
-
+  static const Color _grey = Colors.grey;
+  static const Color _error = Colors.red;
 
   static final Map<Brightness, Color> canvasColor =
   _buildColor(lightColor: _pureWhite, darkColor: _pureWhite);
@@ -42,7 +42,8 @@ class UiColors{
   static final Map<Brightness, Color> greyColor =
   _buildColor(lightColor: _grey, darkColor: _grey);
 
-
+  static final Map<Brightness, Color> errorColor =
+  _buildColor(lightColor: _error, darkColor: _error);
 
 
   static Map<Brightness, Color> _buildColor(
