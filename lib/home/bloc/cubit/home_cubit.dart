@@ -47,10 +47,15 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  void refreshData() {
-    print("refresh data");
+
+  Future<void> refreshData() async {
+
+    List<int> ids = await serviceLocator<DBManager>().getAllIds();
+
     try {
-      emit((state as HomeLoaded).copyWith());
+      var  list = (state as HomeLoaded).gridList;
+      emit((state as HomeLoaded).copyWith(gridList: []));
+      emit((state as HomeLoaded).copyWith(gridList: list,favorite: ids));
     } on Exception catch (e) {
       emit(HomeError('Failed to load data: ${e.toString()}'));
     }
