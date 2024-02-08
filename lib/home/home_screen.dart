@@ -49,19 +49,20 @@ class HomeScreen extends StatelessWidget {
                                   childAspectRatio: 1.3, crossAxisCount: 2),
                           itemBuilder: (context, index) {
                             return BlocProvider<WishListCubit>(
-                              create: (BuildContext context) =>
-                                  WishListCubit(),
+                              create: (BuildContext context) => WishListCubit(),
                               child: MovieItemWidget(
-                                  movie: state.gridList![index],
-                                  bannerWidget: Image.network(
-                                      "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                                  isFromHomeView: true,
-                                  isFavourite: state.favorite
-                                      .map((item) => item)
-                                      .contains(state.gridList![index].id),
-                                  favClickAction: (isFav) => {
-
-                                  },),
+                                movie: state.gridList![index],
+                                bannerWidget: Image.network(
+                                    "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
+                                isFromHomeView: true,
+                                isFavourite: state.favorite
+                                    .map((item) => item)
+                                    .contains(state.gridList![index].id),
+                                favClickAction: (isFav) => {
+                                  BlocProvider.of<HomeCubit>(context)
+                                      .refreshData()
+                                },
+                              ),
                             );
                           },
                           itemCount: state.gridList?.length,

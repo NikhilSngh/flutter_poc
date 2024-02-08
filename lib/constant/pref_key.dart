@@ -6,5 +6,7 @@ enum PrefKey {
   dob,
   gender,
   profileImage,
-  lastActive
+  lastActive,
+  onBoardingShown,
+  timeStamp
 }

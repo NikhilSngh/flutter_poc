@@ -29,6 +29,14 @@ class AppSharedPref {
     return _pref?.getBool(key.name) ?? false;
   }
 
+  setInt({required PrefKey key, required int value}) {
+    _pref?.setInt(key.name, value);
+  }
+
+  int getInt({required PrefKey key}) {
+    return _pref?.getInt(key.name) ?? 0;
+  }
+
   void remove(PrefKey key){
     _pref?.remove(key.name);
   }

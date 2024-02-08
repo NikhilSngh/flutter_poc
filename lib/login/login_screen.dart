@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/constant/app_constant.dart';
+import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/font_size_constants.dart';
 import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
+import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:flutter_poc/helper/app_textfield.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
+import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/utils/validator.dart';
 import 'bloc/login_cubit.dart';
 import 'bloc/state/login_state.dart';
@@ -30,6 +33,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var sharedInstance = serviceLocator<AppSharedPref>();
     return BlocProvider<LoginCubit>(
         create: (context)=> cubit,
         child:Scaffold(
@@ -89,6 +93,8 @@ class LoginScreen extends StatelessWidget {
                                           );
                                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                         } else if (state is LoginSuccessState) {
+                                          sharedInstance.setInt(key: PrefKey.timeStamp,
+                                              value: DateTime.now().millisecondsSinceEpoch);
                                           context.router.push(const AppBottomBarRoute());
                                         }
                                       },

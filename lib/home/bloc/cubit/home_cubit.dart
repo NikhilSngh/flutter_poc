@@ -47,6 +47,15 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  void refreshData() {
+    print("refresh data");
+    try {
+      emit((state as HomeLoaded).copyWith());
+    } on Exception catch (e) {
+      emit(HomeError('Failed to load data: ${e.toString()}'));
+    }
+  }
+
   void loadMore() {
     if (state is HomeLoaded) {
       var currentState = state as HomeLoaded;

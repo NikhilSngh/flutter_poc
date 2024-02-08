@@ -31,7 +31,7 @@ class MovieItemWidget extends StatelessWidget {
       onTap: () {
         movie.isFavSelected = isFavourite;
         context.router.push(DetailScreenRoute(
-            movie: movie),);
+            movie: movie,favClickAction: favClickAction),);
       },
       child: Card(
         child: Padding(

@@ -34,4 +34,5 @@ class AppStrings {
   static const String ok = "OK";
   static const String detail = "Detail";
   static const String appTitle = "Movie Demo App";
+  static const String proceedToMovieApp = "Proceed to Movie App";
 }

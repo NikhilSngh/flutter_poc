@@ -8,7 +8,10 @@ import 'package:flutter_poc/favourite/favourite_screen.dart';
 import 'package:flutter_poc/home/home_screen.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/login/login_screen.dart';
+import 'package:flutter_poc/onboarding/onboarding_screen.dart';
 import 'package:flutter_poc/signup/signup_screen.dart';
+import 'package:flutter_poc/splash/splash_screen.dart';
+
 
 part 'app_router.gr.dart';
 
@@ -22,9 +25,11 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: HomeScreenRoute.page),
         AutoRoute(page: FavoriteScreenRoute.page),
         AutoRoute(page: DetailScreenRoute.page),
-        AutoRoute(page: LoginScreenRoute.page, initial: true),
+        AutoRoute(page: LoginScreenRoute.page, initial: false),
         AutoRoute(page: SignupScreenRoute.page, initial: false),
         AutoRoute(page: AccountScreenRoute.page),
-        AutoRoute(page: EditAccountRoute.page)
+        AutoRoute(page: EditAccountRoute.page),
+        AutoRoute(page: SplashScreenRoute.page, initial: true),
+        AutoRoute(page: OnBoardingScreenRoute.page)
       ];
 }
