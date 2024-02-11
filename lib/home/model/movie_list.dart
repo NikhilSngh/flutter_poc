@@ -45,7 +45,8 @@ class Movie {
    double? voteAverage;
   @JsonKey(name: "vote_count")
    int? voteCount;
-   bool? isFavSelected;
+   @JsonKey(includeFromJson: false)
+   bool isFavSelected = false;
 
    Movie(
       {this.title,
@@ -86,7 +87,7 @@ class Movie {
     voteCount = map['voteCount'] as int;
     originalLanguage = map['language'] as String;
     posterPath = map['poster'] as String;
-    isFavSelected = map['isFavSelected'] == 1;
+    isFavSelected = true;
   }
 
   Map<String, Object?> toMap(Movie instance) => <String, Object?>{

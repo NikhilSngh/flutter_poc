@@ -9,20 +9,30 @@ import 'package:flutter_poc/sl/locator.dart';
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepository _homeRepository;
   final PageController pageController = PageController();
+  List<int> wishListIds = [];
 
   HomeCubit(this._homeRepository) : super(HomeLoading());
+
+  void fetchWishListData() async {
+    wishListIds = await serviceLocator<DBManager>().getAllIds();
+  }
 
   void loadFirstTwoPageOfMovie() {
     loadMoviesData(1);
   }
 
   Future<void> loadMoviesData(int pageNo) async {
+    fetchWishListData();
     try {
       if (pageNo == 1) {
         List<int> ids = await serviceLocator<DBManager>().getAllIds();
         final dataList = await _homeRepository.getMoviesData(pageNo);
         final dataList2 = await _homeRepository.getMoviesData(++pageNo);
-
+        dataList2.movieList?.forEach((element) {
+          if (wishListIds.contains(element.id)) {
+            element.isFavSelected = true;
+          }
+        });
         emit(HomeLoaded(dataList.movieList, dataList2.movieList,
             dataList.page ?? 1, dataList.totalPages ?? -1, false, 0, ids));
       } else {
@@ -34,6 +44,11 @@ class HomeCubit extends Cubit<HomeState> {
           final dataList = await _homeRepository.getMoviesData(pageNo);
 
           homeLoadedState.gridList?.addAll(dataList.movieList ?? []);
+          dataList.movieList?.forEach((element) {
+            if (wishListIds.contains(element.id)) {
+              element.isFavSelected = true;
+            }
+          });
           emit((state as HomeLoaded).copyWith(
               gridList: homeLoadedState.gridList,
               currentPage: dataList.page,
@@ -47,21 +62,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-
-  Future<void> refreshData() async {
-
-    List<int> ids = await serviceLocator<DBManager>().getAllIds();
-
-    try {
-      var  list = (state as HomeLoaded).gridList;
-      emit((state as HomeLoaded).copyWith(gridList: []));
-      emit((state as HomeLoaded).copyWith(gridList: list,favorite: ids));
-    } on Exception catch (e) {
-      emit(HomeError('Failed to load data: ${e.toString()}'));
-    }
-  }
-
   void loadMore() {
+    fetchWishListData();
     if (state is HomeLoaded) {
       var currentState = state as HomeLoaded;
 

@@ -10,10 +10,9 @@ class WishListCubit extends Cubit<WishListState> {
   WishListCubit() : super(WishListInitState());
 
 
-  void addRemoveWishlist(BuildContext context, Movie movie,
-      {bool isNeedToAdd = true}) async {
+  void addRemoveWishlist(BuildContext context, Movie movie) async {
     var db = serviceLocator<DBManager>();
-    if (isNeedToAdd) {
+    if (!movie.isFavSelected) {
       var result = await db.insert(movie);
       if (result > 0) {
         if (context.mounted) emit(WishListSuccess("successfullyAdded",true));

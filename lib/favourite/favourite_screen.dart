@@ -15,8 +15,13 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => FavouriteCubit()..getWishlist(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<FavouriteCubit>(
+          create: (BuildContext context) =>
+          FavouriteCubit()..getWishlist(),
+        ),
+        ],
       child: Scaffold(
           appBar: AppBar(title: const Text(AppStrings.favourites)),
           body: BlocBuilder<FavouriteCubit, FavouriteState>(
@@ -41,9 +46,6 @@ class FavoriteScreen extends StatelessWidget {
                                 "${ApiUrl.IMAGE_BASE_URL}${state.wishListItems[index].backdropPath ?? ''}"),
                           ),
                           isFromHomeView: false,
-                          isFavourite: true,
-                          favClickAction: (isFav) =>
-                              {context.read<FavouriteCubit>().getWishlist()},
                         ),
                       ),
                     );

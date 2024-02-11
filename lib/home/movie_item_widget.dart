@@ -8,30 +8,36 @@ import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/theme/sizes.dart';
 
-class MovieItemWidget extends StatelessWidget {
-  MovieItemWidget(
-      {super.key,
-      required this.movie,
-      required this.bannerWidget,
-      required this.isFromHomeView,
-      required this.isFavourite,
-      required this.favClickAction,
-     });
+class MovieItemWidget extends StatelessWidget with ChangeNotifier {
+  MovieItemWidget({
+    super.key,
+    required this.movie,
+    required this.bannerWidget,
+    required this.isFromHomeView,
+  }) {
+    _wishlist = ValueNotifier<bool>(movie.isFavSelected);
+  }
 
   final Movie movie;
   final Widget bannerWidget;
   final bool isFromHomeView;
-  final Function(bool) favClickAction;
-  bool isFavourite;
 
+  late ValueNotifier<bool>? _wishlist;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        movie.isFavSelected = isFavourite;
-        context.router.push(DetailScreenRoute(
-            movie: movie,favClickAction: favClickAction),);
+        context.router
+            .push(
+          DetailScreenRoute(
+              movie: movie,
+              contextHome: context),
+        )
+            .then((value) {
+          _wishlist?.value = movie.isFavSelected;
+          _wishlist?.notifyListeners();
+        });
       },
       child: Card(
         child: Padding(
@@ -47,8 +53,7 @@ class MovieItemWidget extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         final cubit = context.read<WishListCubit>();
-                        cubit.addRemoveWishlist(context, movie,
-                            isNeedToAdd: !isFavourite);
+                        cubit.addRemoveWishlist(context, movie);
                       },
                       child: Align(
                         alignment: Alignment.topRight,
@@ -57,13 +62,18 @@ class MovieItemWidget extends StatelessWidget {
                           child: BlocBuilder<WishListCubit, WishListState>(
                               builder: (context, state) {
                             if (state is WishListSuccess) {
-                              if (isFromHomeView) isFavourite = state.isFavourite;
-                              favClickAction.call(isFavourite);
+                              movie.isFavSelected = !movie.isFavSelected;
                             }
-                            return Icon(
-                              AppIconConstant.favorite,
-                              color:
-                                  isFavourite ? Colors.red : Colors.grey,
+                            return ValueListenableBuilder(
+                              valueListenable: _wishlist!,
+                              builder: (context, value, _) {
+                                return Icon(
+                                  AppIconConstant.favorite,
+                                  color: movie.isFavSelected
+                                      ? Colors.red
+                                      : Colors.grey,
+                                );
+                              },
                             );
                           }),
                         ),
@@ -95,7 +105,7 @@ class MovieItemWidget extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height:  Sizes.size4,
+                height: Sizes.size4,
               ),
               Text(movie.title ?? '',
                   maxLines: 1, style: Theme.of(context).textTheme.titleSmall)

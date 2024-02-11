@@ -46,7 +46,7 @@ class SplashScreen extends StatelessWidget {
       int time;
       time = diff.inMinutes;
 
-      return time < 5 ? true : false;
+      return time < 50 ? true : false;
     } else {
       return false;
     }

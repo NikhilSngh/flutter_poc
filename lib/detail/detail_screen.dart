@@ -5,25 +5,28 @@ import 'package:flutter_poc/constant/app_icon_constant.dart';
 import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/data/network/api_url.dart';
-import 'package:flutter_poc/detail/cubit/detail_wish_list_cubit.dart';
 import 'package:flutter_poc/detail/detail_text_icon_widget.dart';
-import 'package:flutter_poc/detail/state/detail_wish_list_state.dart';
+import 'package:flutter_poc/home/bloc/cubit/wish_list_cubit.dart';
+import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/theme/sizes.dart';
 
 @RoutePage()
 class DetailScreen extends StatelessWidget {
   final Movie movie;
-  final Function(bool) favClickAction;
+  final BuildContext contextHome;
+
 
   const DetailScreen(
-      {Key? key, required this.movie, required this.favClickAction})
+      {Key? key,
+      required this.movie,
+      required this.contextHome})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => DetailWishListCubit(),
+      create: (BuildContext context) => WishListCubit(),
       child: Scaffold(
           appBar: AppBar(
             title: const Text(AppStrings.detail),
@@ -32,21 +35,19 @@ class DetailScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     right: AppPaddingMarginConstant.small,
                     left: AppPaddingMarginConstant.small),
-                child: BlocBuilder<DetailWishListCubit, DetailWishListState>(
+                child: BlocBuilder<WishListCubit, WishListState>(
                   builder: (context, state) {
                     if (state is WishListSuccess) {
-                      movie.isFavSelected = state.isFavourite;
-                      favClickAction.call(state.isFavourite);
+                      movie.isFavSelected = !movie.isFavSelected;
                     }
                     return IconButton(
                       onPressed: () {
-                        BlocProvider.of<DetailWishListCubit>(context)
-                            .addRemoveFavourites(movie,
-                                isNeedToAdd: !movie.isFavSelected!);
+                        BlocProvider.of<WishListCubit>(context)
+                            .addRemoveWishlist(context, movie);
                       },
                       icon: Icon(
                         AppIconConstant.favorite,
-                        color: movie.isFavSelected! ? Colors.red : Colors.grey,
+                        color: movie.isFavSelected ? Colors.red : Colors.grey,
                       ),
                     );
                   },
