@@ -73,7 +73,6 @@ class DetailScreen extends StatelessWidget {
                       top: AppPaddingMarginConstant.extraSmall),
                   child: Text(movie.title.toString(),
                       style: const TextStyle(
-                          color: Colors.black,
                           fontSize: Sizes.size15,
                           fontWeight: FontWeight.bold)),
                 ),

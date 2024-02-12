@@ -12,21 +12,22 @@ import 'package:flutter_poc/sl/locator.dart';
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
+  final  _sessionOutTime = 5;
+
   @override
   Widget build(BuildContext context) {
     var sharedInstance = serviceLocator<AppSharedPref>();
     Timer(
         const Duration(seconds: 3),
         () =>
-        {
-              sharedInstance.getBool(key: PrefKey.loginStatus) &&
+        sharedInstance.getBool(key: PrefKey.loginStatus) &&
                       checkTimestamp(
                           sharedInstance.getInt(key: PrefKey.timeStamp))
                   ? context.router.push(const AppBottomBarRoute())
                   : sharedInstance.getBool(key: PrefKey.onBoardingShown)
                       ? context.router.push(LoginScreenRoute())
                       : context.router.push(const OnBoardingScreenRoute())
-            });
+            );
     return Scaffold(
       body: Image.asset(
         Assets.images.splash.path,
@@ -46,7 +47,7 @@ class SplashScreen extends StatelessWidget {
       int time;
       time = diff.inMinutes;
 
-      return time < 50 ? true : false;
+      return time < _sessionOutTime ? true : false;
     } else {
       return false;
     }
