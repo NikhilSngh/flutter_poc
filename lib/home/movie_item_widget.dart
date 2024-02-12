@@ -22,6 +22,7 @@ class MovieItemWidget extends StatelessWidget with ChangeNotifier {
   final Widget bannerWidget;
   final bool isFromHomeView;
 
+
   late ValueNotifier<bool>? _wishlist;
 
   @override
@@ -31,8 +32,7 @@ class MovieItemWidget extends StatelessWidget with ChangeNotifier {
         context.router
             .push(
           DetailScreenRoute(
-              movie: movie,
-              contextHome: context),
+              movie: movie),
         )
             .then((value) {
           _wishlist?.value = movie.isFavSelected;

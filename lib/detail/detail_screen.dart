@@ -10,17 +10,16 @@ import 'package:flutter_poc/home/bloc/cubit/wish_list_cubit.dart';
 import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/theme/sizes.dart';
+import 'package:flutter_poc/theme/ui_colors.dart';
 
 @RoutePage()
 class DetailScreen extends StatelessWidget {
   final Movie movie;
-  final BuildContext contextHome;
 
 
   const DetailScreen(
       {Key? key,
-      required this.movie,
-      required this.contextHome})
+      required this.movie})
       : super(key: key);
 
   @override
@@ -73,76 +72,81 @@ class DetailScreen extends StatelessWidget {
                       top: AppPaddingMarginConstant.extraSmall),
                   child: Text(movie.title.toString(),
                       style: const TextStyle(
-                          fontSize: Sizes.size15,
-                          fontWeight: FontWeight.bold)),
+                          fontSize: Sizes.size15, fontWeight: FontWeight.bold)),
                 ),
                 Container(
                     margin: const EdgeInsets.only(
                         top: AppPaddingMarginConstant.extraSmall),
                     child: Text(movie.overview.toString())),
                 Container(
-                  margin: const EdgeInsets.only(
-                      top: AppPaddingMarginConstant.extraSmall),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DetailTextIconWidget(
-                          iconData: Icons.no_adult_content,
-                          text: movie.adult.toString()),
-                      DetailTextIconWidget(
-                          iconData: Icons.language,
-                          text: movie.originalLanguage.toString()),
-                      DetailTextIconWidget(
-                          iconData: Icons.aspect_ratio,
-                          text: movie.popularity.toString()),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                      top: AppPaddingMarginConstant.extraSmall),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Text(AppStrings.releaseDate,
-                              style: TextStyle(
-                                  color: Colors.black, fontSize: Sizes.size18)),
-                          Center(
-                            child: Text(movie.releaseDate.toString(),
-                                style: const TextStyle(
-                                    color: Colors.green,
-                                    fontSize: Sizes.size15,
-                                    fontWeight: FontWeight.bold)),
+                  margin: const EdgeInsets.only(top: AppPaddingMarginConstant.large),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppPaddingMarginConstant.small),
+                      child: Column(
+                        children: [Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            DetailTextIconWidget(
+                                iconData: Icons.no_adult_content,
+                                text: movie.adult.toString()),
+                            DetailTextIconWidget(
+                                iconData: Icons.language,
+                                text: movie.originalLanguage.toString()),
+                            DetailTextIconWidget(
+                                iconData: Icons.aspect_ratio,
+                                text: movie.popularity.toString()),
+                          ],
+                        ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                                top: AppPaddingMarginConstant.extraSmall),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text(AppStrings.releaseDate,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: Sizes.size18)),
+                                    Center(
+                                      child: Text(movie.releaseDate.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Sizes.size15,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(AppStrings.rating,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: Sizes.size18,
+                                        )),
+                                    Center(
+                                      child: Text(movie.voteAverage.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Sizes.size15,
+                                              fontWeight: FontWeight.bold)),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
+                          Container(
+                            margin: const EdgeInsets.only(
+                                top: AppPaddingMarginConstant.small),
+                            child: DetailTextIconWidget(
+                                iconData: Icons.perm_media_outlined,
+                                text: movie.mediaType.toString()),
+                          ),],
                       ),
-                      Row(
-                        children: [
-                          const Text(AppStrings.rating,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: Sizes.size18,
-                              )),
-                          Center(
-                            child: Text(movie.voteAverage.toString(),
-                                style: const TextStyle(
-                                    color: Colors.green,
-                                    fontSize: Sizes.size15,
-                                    fontWeight: FontWeight.bold)),
-                          )
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                      top: AppPaddingMarginConstant.small),
-                  child: DetailTextIconWidget(
-                      iconData: Icons.perm_media_outlined,
-                      text: movie.mediaType.toString()),
                 ),
               ]),
             ),
