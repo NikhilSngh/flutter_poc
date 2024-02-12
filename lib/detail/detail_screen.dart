@@ -10,7 +10,6 @@ import 'package:flutter_poc/home/bloc/cubit/wish_list_cubit.dart';
 import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/theme/sizes.dart';
-import 'package:flutter_poc/theme/ui_colors.dart';
 
 @RoutePage()
 class DetailScreen extends StatelessWidget {
