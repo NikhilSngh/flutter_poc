@@ -14,11 +14,12 @@ import 'package:flutter_poc/theme/sizes.dart';
 @RoutePage()
 class DetailScreen extends StatelessWidget {
   final Movie movie;
-
+  final Function() isClicked;
 
   const DetailScreen(
       {Key? key,
-      required this.movie})
+      required this.movie,
+      required this.isClicked})
       : super(key: key);
 
   @override
@@ -36,6 +37,7 @@ class DetailScreen extends StatelessWidget {
                 child: BlocBuilder<WishListCubit, WishListState>(
                   builder: (context, state) {
                     if (state is WishListSuccess) {
+                      isClicked.call();
                       movie.isFavSelected = !movie.isFavSelected;
                     }
                     return IconButton(

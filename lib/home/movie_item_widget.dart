@@ -9,19 +9,19 @@ import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/theme/sizes.dart';
 
 class MovieItemWidget extends StatelessWidget with ChangeNotifier {
-  MovieItemWidget({
-    super.key,
-    required this.movie,
-    required this.bannerWidget,
-    required this.isFromHomeView,
-  }) {
+  MovieItemWidget(
+      {super.key,
+      required this.movie,
+      required this.bannerWidget,
+      required this.isFromHomeView,
+      required this.isClicked}) {
     _wishlist = ValueNotifier<bool>(movie.isFavSelected);
   }
 
   final Movie movie;
   final Widget bannerWidget;
   final bool isFromHomeView;
-
+  final Function()? isClicked;
 
   late ValueNotifier<bool>? _wishlist;
 
@@ -32,7 +32,10 @@ class MovieItemWidget extends StatelessWidget with ChangeNotifier {
         context.router
             .push(
           DetailScreenRoute(
-              movie: movie),
+              movie: movie,
+              isClicked: () {
+                isClicked!.call();
+              }),
         )
             .then((value) {
           _wishlist?.value = movie.isFavSelected;
@@ -62,6 +65,7 @@ class MovieItemWidget extends StatelessWidget with ChangeNotifier {
                           child: BlocBuilder<WishListCubit, WishListState>(
                               builder: (context, state) {
                             if (state is WishListSuccess) {
+                              isClicked!.call();
                               movie.isFavSelected = !movie.isFavSelected;
                             }
                             return ValueListenableBuilder(

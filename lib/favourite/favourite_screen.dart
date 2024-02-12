@@ -45,7 +45,9 @@ class FavoriteScreen extends StatelessWidget {
                             child: Image.network(
                                 "${ApiUrl.IMAGE_BASE_URL}${state.wishListItems[index].backdropPath ?? ''}"),
                           ),
-                          isFromHomeView: false,
+                          isFromHomeView: false, isClicked: () {
+                          context.read<FavouriteCubit>().getWishlist();
+                        },
                         ),
                       ),
                     );

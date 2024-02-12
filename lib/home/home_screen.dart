@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                                 movie: state.gridList![index],
                                 bannerWidget: Image.network(
                                     "${ApiUrl.IMAGE_BASE_URL}${state.gridList?[index].backdropPath ?? ''}"),
-                                isFromHomeView: true,
+                                isFromHomeView: true, isClicked: () {  },
                               ),
                             );
                           },
