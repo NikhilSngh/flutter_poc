@@ -193,7 +193,9 @@ class SignupScreen extends StatelessWidget {
       if (pickedImage != null) {
         params[LoginApiKeys.image] = pickedImage;
       }
-      signupCubit.signup(params);
+      //signupCubit.signup(params);
+      signupCubit.signUpFireBase(_nameEditingController.text,
+          _emailEditingController.text, _passwordEditingController.text);
     }
   }
 }
