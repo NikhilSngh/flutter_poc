@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
+import 'package:flutter_poc/extension.dart';
 import 'package:flutter_poc/helper/common_radio_button.dart';
 import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:flutter_poc/helper/app_textfield.dart';
@@ -40,7 +42,8 @@ class SignupScreen extends StatelessWidget {
     return BlocProvider<SignupCubit>(
         create: (context) => SignupCubit(
             sharedInstance: serviceLocator<AppSharedPref>(),
-            fileManager: serviceLocator<FileManager>()),
+            fileManager: serviceLocator<FileManager>(),
+            auth:serviceLocator<FirebaseAuth>()),
         child: Scaffold(
             appBar: AppBar(title: const Text(AppStrings.signUp)),
             body: SafeArea(
@@ -161,12 +164,16 @@ class SignupScreen extends StatelessWidget {
                                   BlocConsumer<SignupCubit, SignupState>(
                                       listener: (context, state) {
                                     if (state is SignupError) {
+                                      Navigator.pop(context);
                                       SnackBar snackBar = SnackBar(
                                           content: Text(state.message ?? ''));
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(snackBar);
                                     } else if (state is SignupSuccessState) {
+                                      Navigator.pop(context);
                                       context.router.pop();
+                                    }else if(state is SignupLoadingState){
+                                      context.showLoader();
                                     }
                                   }, builder: (context, state) {
                                     return AppElevatedButton(
@@ -193,9 +200,7 @@ class SignupScreen extends StatelessWidget {
       if (pickedImage != null) {
         params[LoginApiKeys.image] = pickedImage;
       }
-      //signupCubit.signup(params);
-      signupCubit.signUpFireBase(_nameEditingController.text,
-          _emailEditingController.text, _passwordEditingController.text);
+      signupCubit.signUpFireBase(params);
     }
   }
 }

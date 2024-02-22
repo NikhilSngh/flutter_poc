@@ -1,14 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_poc/constant/app_constant.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/font_size_constants.dart';
 import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
+import 'package:flutter_poc/extension.dart';
 import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:flutter_poc/helper/app_textfield.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
@@ -28,7 +29,8 @@ class LoginScreen extends StatelessWidget {
     _formKey = GlobalKey();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    cubit = LoginCubit();
+    cubit = LoginCubit(serviceLocator<AppSharedPref>(),
+        serviceLocator<FirebaseAuth>());
   }
 
   @override
@@ -88,14 +90,18 @@ class LoginScreen extends StatelessWidget {
                                   BlocConsumer<LoginCubit, LoginState>(
                                       listener: (context, state) {
                                         if (state is LoginError) {
+                                          Navigator.pop(context);
                                           SnackBar snackBar = SnackBar(
                                               content: Text(state.message ?? '')
                                           );
                                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                         } else if (state is LoginSuccessState) {
+                                          Navigator.pop(context);
                                           sharedInstance.setInt(key: PrefKey.timeStamp,
                                               value: DateTime.now().millisecondsSinceEpoch);
                                           context.router.push(const AppBottomBarRoute());
+                                        }else if(state is LoginLoadingState){
+                                          context.showLoader();
                                         }
                                       },
                                       builder: (context, state) {
@@ -121,10 +127,8 @@ class LoginScreen extends StatelessWidget {
   void _validateForm() async {
     if (_formKey.currentState?.validate() == true) {
       SystemChannels.textInput.invokeMethod("TextInput.hide");
-      var params = {LoginApiKeys.email: _emailController.text,
-        LoginApiKeys.password: _passwordController.text
-      };
-      cubit.loginIn(params);
+      cubit.signInUsingEmailPassword(email: _emailController.text,
+          password: _passwordController.text);
     }
   }
 }

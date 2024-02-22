@@ -13,9 +13,13 @@ import 'package:path/path.dart';
 class SignupCubit extends Cubit<SignupState> {
   final AppSharedPref sharedInstance;
   final FileManager fileManager;
+  final FirebaseAuth auth;
 
-  SignupCubit({required this.sharedInstance, required this.fileManager})
-      : super(SignupInitialState());
+  SignupCubit({
+    required this.sharedInstance,
+    required this.fileManager,
+    required this.auth,
+  }) : super(SignupInitialState());
 
   void signup(Map request) async {
     sharedInstance.setString(
@@ -41,33 +45,26 @@ class SignupCubit extends Cubit<SignupState> {
     emit(SignupSuccessState());
   }
 
-  Future<User?> signUpFireBase(
-    String name,
-    String email,
-    String password,
-  ) async  {
-    FirebaseAuth auth = FirebaseAuth.instance;
+  Future<User?> signUpFireBase(Map request) async {
+    emit(SignupLoadingState());
     User? user;
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: request[LoginApiKeys.email],
+        password: request[LoginApiKeys.password],
       );
       user = userCredential.user;
-      await user!.updateDisplayName(name);
+      await user!.updateDisplayName(request[LoginApiKeys.name]);
       await user.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
+      emit(SignupError(e.code));
+      return user;
     } catch (e) {
-      print(e);
+      emit(SignupError(e.toString()));
+      return user;
     }
-    print(user.toString());
+    signup(request);
     return user;
   }
-
 }

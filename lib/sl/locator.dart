@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/data/network/api_client.dart';
 import 'package:flutter_poc/data/network/api_service.dart';
@@ -13,4 +14,5 @@ void setUp(){
   serviceLocator.registerSingleton<DBManager>(DBManager());
   serviceLocator.registerSingleton<AppSharedPref>(AppSharedPref());
   serviceLocator.registerSingleton<FileManager>(FileManager());
+  serviceLocator.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
 }

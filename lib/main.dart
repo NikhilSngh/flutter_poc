@@ -9,11 +9,11 @@ import 'package:flutter_poc/theme/ui_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setUp();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  setUp();
   runApp(MyApp());
 }
 
