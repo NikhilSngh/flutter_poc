@@ -43,6 +43,8 @@ dependencies:
   shared_preferences:
   encrypt:
   image_picker:
+  bloc_test: ^9.1.6
+  mockito: ^5.4.4
 
 
   # The following adds the Cupertino Icons font to your application.

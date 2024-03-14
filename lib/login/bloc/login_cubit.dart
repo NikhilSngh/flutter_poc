@@ -37,7 +37,7 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<User?> signInUsingEmailPassword({
+  signInUsingEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -65,6 +65,5 @@ class LoginCubit extends Cubit<LoginState> {
             .base64);
     appSharedPref.setBool(key: PrefKey.loginStatus, value: true);
     emit(LoginSuccessState());
-    return user;
   }
 }

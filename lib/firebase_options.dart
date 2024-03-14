@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCSGLB0xAVZD0igJr_qf9alXDyj2LYwRhU',
+    appId: '1:787061780539:web:3864ba93ac3eff66d36c1e',
+    messagingSenderId: '787061780539',
+    projectId: 'flutter-poc-9a793',
+    authDomain: 'flutter-poc-9a793.firebaseapp.com',
+    storageBucket: 'flutter-poc-9a793.appspot.com',
+    measurementId: 'G-X1CLV5RGGD',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCqfCOin1SQonWnKXrgcOlIHfSIEpmYC4g',
     appId: '1:787061780539:android:0a58cc95c2f66b9bd36c1e',
@@ -64,5 +68,14 @@ class DefaultFirebaseOptions {
     projectId: 'flutter-poc-9a793',
     storageBucket: 'flutter-poc-9a793.appspot.com',
     iosBundleId: 'com.example.flutterPoc',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyA9SpJAozvny_3MM0QBIc10nwQV5Od4Q4A',
+    appId: '1:787061780539:ios:800ab04aba17fbf1d36c1e',
+    messagingSenderId: '787061780539',
+    projectId: 'flutter-poc-9a793',
+    storageBucket: 'flutter-poc-9a793.appspot.com',
+    iosBundleId: 'com.example.flutterPoc.RunnerTests',
   );
 }
