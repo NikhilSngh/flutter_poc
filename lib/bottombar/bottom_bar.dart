@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/account/account_screen.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_poc/favourite/bloc/cubit/favourite_cubit.dart';
 import 'package:flutter_poc/favourite/favourite_screen.dart';
 import 'package:flutter_poc/home/bloc/cubit/home_cubit.dart';
 import 'package:flutter_poc/home/home_screen.dart';
+import 'package:flutter_poc/navigation/app_router.dart';
 import '../home/repository/home_repository.dart';
 
 @RoutePage()
@@ -29,11 +31,13 @@ class _AppBottomBarState extends State<AppBottomBar> {
     const AccountScreen()
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: _bottomBar());
   }
+
 
   Widget _bottomBar() {
     return BottomNavigationBar(
@@ -48,12 +52,26 @@ class _AppBottomBarState extends State<AppBottomBar> {
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
     );
+
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: _bottomBar());
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        context.router.replace(HomeScreenRoute());
+        break;
+      case 1:
+        context.router.replace(const FavoriteScreenRoute());
+        break;
+      case 2:
+        context.router.replace(const AccountScreenRoute());
+        break;
+    }
+
   }
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_poc/constant/app_size_constants.dart';
 import 'package:flutter_poc/data/network/api_url.dart';
+import 'package:flutter_poc/helper/responsive_widget.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/theme/sizes.dart';
 
@@ -95,34 +96,39 @@ class _CarouselViewState extends State<CarouselView> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     _animationController.forward();
-    return SizedBox(
-        height: AppSize.width / 2,
-        child: Stack(
-        children: [
-          PageView.builder(
-            itemCount: _totalPage,
-            scrollDirection: Axis.horizontal,
-            controller: _pageController,
-            onPageChanged: (value) {
-              _currentPage = value;
-              setState(() { });
-              _animationController.forward();
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: (){
+    return LayoutBuilder(
+      builder: (context, constraint){
+        return SizedBox(
+            height: ResponsiveWidget.isSmallScreen(context)? 200:400,
+            child: Stack(
+                children: [
+                  PageView.builder(
+                      itemCount: _totalPage,
+                      scrollDirection: Axis.horizontal,
+                      controller: _pageController,
+                      onPageChanged: (value) {
+                        _currentPage = value;
+                        setState(() { });
+                        _animationController.forward();
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                            onTap: (){
 
-                },
-                child: Image.network(
-                  ApiUrl.IMAGE_BASE_URL +
-                      widget.movieList[index].backdropPath.toString(),
-                  fit: BoxFit.contain,
-                  height: Sizes.size200,
-                )
-              );
-            }),
-          _buildPageIndicator()
-        ])
+                            },
+                            child: Image.network(
+                              ApiUrl.IMAGE_BASE_URL +
+                                  widget.movieList[index].backdropPath.toString(),
+                              fit: BoxFit.contain,
+                              height: Sizes.size200,
+                            )
+                        );
+                      }),
+                  _buildPageIndicator()
+                ])
+        );
+      },
+
     );
   }
 }

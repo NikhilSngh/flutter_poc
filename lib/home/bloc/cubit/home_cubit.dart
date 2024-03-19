@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/db/db_manager.dart';
+import 'package:flutter_poc/db/hive_manager.dart';
 import 'package:flutter_poc/home/bloc/state/home_state.dart';
 import 'package:flutter_poc/home/repository/home_repository.dart';
 import 'package:flutter_poc/sl/locator.dart';
@@ -14,7 +15,8 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._homeRepository) : super(HomeLoading());
 
   void fetchWishListData() async {
-    wishListIds = await serviceLocator<DBManager>().getAllIds();
+    //wishListIds = await serviceLocator<DBManager>().getAllIds();
+    wishListIds =  serviceLocator<HiveManager>().getAllMovieIds();
   }
 
   void loadFirstTwoPageOfMovie() {
@@ -25,7 +27,8 @@ class HomeCubit extends Cubit<HomeState> {
     fetchWishListData();
     try {
       if (pageNo == 1) {
-        List<int> ids = await serviceLocator<DBManager>().getAllIds();
+        //List<int> ids = await serviceLocator<DBManager>().getAllIds();
+        List<int> ids =  serviceLocator<HiveManager>().getAllMovieIds();
         final dataList = await _homeRepository.getMoviesData(pageNo);
         final dataList2 = await _homeRepository.getMoviesData(++pageNo);
         dataList2.movieList?.forEach((element) {
@@ -34,13 +37,14 @@ class HomeCubit extends Cubit<HomeState> {
           }
         });
         emit(HomeLoaded(dataList.movieList, dataList2.movieList,
-            dataList.page ?? 1, dataList.totalPages ?? -1, false, 0, ids));
+            dataList.page ?? 1, dataList.totalPages ?? -1, false, 0,[] /*ids*/));
       } else {
         if (state is HomeLoaded) {
           var homeLoadedState = state as HomeLoaded;
           emit(homeLoadedState.copyWith(isReachedEnd: true));
 
-          List<int> ids = await serviceLocator<DBManager>().getAllIds();
+          //List<int> ids = await serviceLocator<DBManager>().getAllIds();
+          List<int> ids =  serviceLocator<HiveManager>().getAllMovieIds();
           final dataList = await _homeRepository.getMoviesData(pageNo);
 
           homeLoadedState.gridList?.addAll(dataList.movieList ?? []);
@@ -54,7 +58,7 @@ class HomeCubit extends Cubit<HomeState> {
               currentPage: dataList.page,
               totalPages: dataList.totalPages,
               isReachedEnd: false,
-              favorite: ids));
+              favorite: []/*ids*/));
         }
       }
     } on Exception catch (e) {

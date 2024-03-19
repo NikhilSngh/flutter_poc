@@ -21,15 +21,17 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes =>
       [
-        AutoRoute(page: AppBottomBarRoute.page, initial: false,),
-        AutoRoute(page: HomeScreenRoute.page),
-        AutoRoute(page: FavoriteScreenRoute.page),
-        AutoRoute(page: DetailScreenRoute.page),
-        AutoRoute(page: LoginScreenRoute.page, initial: false),
-        AutoRoute(page: SignupScreenRoute.page, initial: false),
-        AutoRoute(page: AccountScreenRoute.page),
-        AutoRoute(page: EditAccountRoute.page),
-        AutoRoute(page: SplashScreenRoute.page, initial: true),
-        AutoRoute(page: OnBoardingScreenRoute.page)
+        AutoRoute(page: AppBottomBarRoute.page,path: "/dashboard",
+         children: [
+           AutoRoute(page: HomeScreenRoute.page,path:"home"),
+           AutoRoute(page: FavoriteScreenRoute.page,path:"favourite"),
+           AutoRoute(page: AccountScreenRoute.page,path:"account"),
+      ]),
+        AutoRoute(page: DetailScreenRoute.page,path:"/detail"),
+        AutoRoute(page: LoginScreenRoute.page, initial: false,path:"/login"),
+        AutoRoute(page: SignupScreenRoute.page, initial: false,path:"/signup"),
+        AutoRoute(page: EditAccountRoute.page,path:"/editAccount"),
+        AutoRoute(page: SplashScreenRoute.page, initial: true,path:"/splash"),
+        AutoRoute(page: OnBoardingScreenRoute.page,path:"/onboarding")
       ];
 }
