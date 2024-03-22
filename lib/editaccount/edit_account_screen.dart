@@ -12,9 +12,11 @@ import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:flutter_poc/constant/spacing_constants.dart';
 import 'package:flutter_poc/editaccount/edit_acount_cubit.dart';
 import 'package:flutter_poc/editaccount/edit_acount_state.dart';
+import 'package:flutter_poc/extension.dart';
 import 'package:flutter_poc/helper/common_radio_button.dart';
 import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:flutter_poc/helper/app_textfield.dart';
+import 'package:flutter_poc/helper/responsive_widget.dart';
 import 'package:flutter_poc/signup/profile_Image.dart';
 import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/utils/date_picker.dart';
@@ -77,96 +79,103 @@ class EditAccount extends StatelessWidget {
                             right: AppPaddingMarginConstant.regular),
                         child: Form(
                             key: _formKey,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Container(
-                                    margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
-                                    child: ValueListenableBuilder(
-                                        valueListenable: _gender,
-                                        builder: (context, value, _) {
-                                          return ProfileImage(
-                                            pickerImage: (image) {
-                                              _pickedImage = image;
+                            child: Center(
+                              child: SizedBox(
+                                width: ResponsiveWidget.isSmallScreen(context)
+                                    ? context.getWidth()
+                                    : context.getWidth() / 2,
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Container(
+                                        margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
+                                        child: ValueListenableBuilder(
+                                            valueListenable: _gender,
+                                            builder: (context, value, _) {
+                                              return ProfileImage(
+                                                pickerImage: (image) {
+                                                  _pickedImage = image;
+                                                },
+                                                gender: _gender.value,
+                                                pickedImage: _pickedImage,
+                                              );
+                                            }),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
+                                        child: AppTextField(
+                                            label: AppStrings.name,
+                                            controller: _nameEditingController,
+                                            validator: (value) {
+                                              if (value != null) {
+                                                if (Validator.isValidName(context,
+                                                        name: value) !=
+                                                    null) {
+                                                  return Validator.isValidName(
+                                                      context,
+                                                      name: value);
+                                                }
+                                              }
+                                              return null;
                                             },
-                                            gender: _gender.value,
-                                            pickedImage: _pickedImage,
+                                            inputType: TextInputType.name),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
+                                        child: AppTextField(
+                                            label: AppStrings.dob,
+                                            readOnly: true,
+                                            onTap: () {
+                                              DatePicker(context, date: (date) {
+                                                _dobEditingController.text = date;
+                                              }).show();
+                                            },
+                                            controller: _dobEditingController,
+                                            validator: (value) {
+                                              if (value != null) {
+                                                if (Validator.isEmpty(value)) {
+                                                  return AppStrings.dobMessage;
+                                                }
+                                              }
+                                              return null;
+                                            },
+                                            inputType: TextInputType.emailAddress),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
+                                        child: AppRadioButton(
+                                            label: AppStrings.gender,
+                                            items: const [
+                                              AppStrings.male,
+                                              AppStrings.female,
+                                              AppStrings.other
+                                            ],
+                                            selectedItem: _gender.value,
+                                            onChange: (value) {
+                                              _gender.value = value;
+                                            }),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
+                                        child: BlocConsumer<EditAccountCubit,
+                                                EditAccountState>(
+                                            listener: (context, state) {
+                                          if (state is SuccessState) {
+                                            context.router.pop();
+                                            isUpdated.call();
+                                          }
+                                        }, builder: (context, state) {
+                                          return AppElevatedButton(
+                                            title: AppStrings.update,
+                                            onPressed: () {
+                                              _validateForm();
+                                            },
                                           );
                                         }),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
-                                    child: AppTextField(
-                                        label: AppStrings.name,
-                                        controller: _nameEditingController,
-                                        validator: (value) {
-                                          if (value != null) {
-                                            if (Validator.isValidName(context,
-                                                    name: value) !=
-                                                null) {
-                                              return Validator.isValidName(
-                                                  context,
-                                                  name: value);
-                                            }
-                                          }
-                                          return null;
-                                        },
-                                        inputType: TextInputType.name),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
-                                    child: AppTextField(
-                                        label: AppStrings.dob,
-                                        readOnly: true,
-                                        onTap: () {
-                                          DatePicker(context, date: (date) {
-                                            _dobEditingController.text = date;
-                                          }).show();
-                                        },
-                                        controller: _dobEditingController,
-                                        validator: (value) {
-                                          if (value != null) {
-                                            if (Validator.isEmpty(value)) {
-                                              return AppStrings.dobMessage;
-                                            }
-                                          }
-                                          return null;
-                                        },
-                                        inputType: TextInputType.emailAddress),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
-                                    child: AppRadioButton(
-                                        label: AppStrings.gender,
-                                        items: const [
-                                          AppStrings.male,
-                                          AppStrings.female,
-                                          AppStrings.other
-                                        ],
-                                        selectedItem: _gender.value,
-                                        onChange: (value) {
-                                          _gender.value = value;
-                                        }),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: SpacingConstant.accountWidgetVerticalSpacing10),
-                                    child: BlocConsumer<EditAccountCubit,
-                                            EditAccountState>(
-                                        listener: (context, state) {
-                                      if (state is SuccessState) {
-                                        context.router.pop();
-                                        isUpdated.call();
-                                      }
-                                    }, builder: (context, state) {
-                                      return AppElevatedButton(
-                                        title: AppStrings.update,
-                                        onPressed: () {
-                                          _validateForm();
-                                        },
-                                      );
-                                    }),
-                                  )
-                                ])))))));
+                                      )
+                                    ]),
+                              ),
+                            )))))));
   }
 }

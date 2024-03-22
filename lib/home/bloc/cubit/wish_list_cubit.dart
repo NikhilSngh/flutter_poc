@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/db/db_manager.dart';
 import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
@@ -11,21 +12,23 @@ class WishListCubit extends Cubit<WishListState> {
 
 
   void addRemoveWishlist(BuildContext context, Movie movie) async {
-    var db = serviceLocator<DBManager>();
+    var wishListIds = serviceLocator<AppSharedPref>().getList<Movie>('favouriteList', Movie.fromJson);
     if (!movie.isFavSelected) {
-      var result = await db.insert(movie);
-      if (result > 0) {
+      wishListIds.add(movie);
+      var result =  serviceLocator<AppSharedPref>().saveList('favouriteList',
+          wishListIds.map((fav) => fav.toJson()).toList());
+      if (await result) {
         if (context.mounted) emit(WishListSuccess("successfullyAdded",true));
       } else {
         if (context.mounted) emit(WishListError("dbError"));
       }
     } else {
-      var result = await db.delete(movie.id ?? 0);
-      if (result > 0) {
+      wishListIds.removeWhere((element) => element.id == movie.id);
+      var result = serviceLocator<AppSharedPref>().saveList('favouriteList', wishListIds);
+      if (await result) {
         if (context.mounted) {
           emit(WishListSuccess("successfullyRemoved",false));
         }
-
       } else {
         if (context.mounted)  emit(WishListError("dbError"));
       }

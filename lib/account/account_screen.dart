@@ -10,7 +10,9 @@ import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/constant/pref_key.dart';
+import 'package:flutter_poc/extension.dart';
 import 'package:flutter_poc/gen/assets.gen.dart';
+import 'package:flutter_poc/helper/responsive_widget.dart';
 import 'package:flutter_poc/navigation/app_router.dart';
 import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/theme/sizes.dart';
@@ -64,6 +66,7 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(AppStrings.account),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: const Icon(AppIconConstant.signOut),
@@ -89,42 +92,49 @@ class _AccountScreenState extends State<AccountScreen> {
                     left: AppPaddingMarginConstant.small,
                     right: AppPaddingMarginConstant.small,
                     top: AppPaddingMarginConstant.small),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: Sizes.size100,
-                        width: Sizes.size100,
-                        child: CircleAvatar(
-                          child: imageFile != null
-                              ? ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(Sizes.size50),
-                                  child: Image.file(imageFile!,
-                                      fit: BoxFit.cover,
-                                      height: Sizes.size100,
-                                      width: Sizes.size100))
-                              : ClipOval(
-                                  child: gender == AppStrings.other
-                                      ? Assets.images.other.image()
-                                      : gender == AppStrings.male
-                                          ? Assets.images.man.image()
-                                          : Assets.images.woman.image()),
-                        ),
-                      ),
-                      Center(
-                          child: Text(name ?? '',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ))),
-                      ProfileCardWidget(
-                          child: Column(children: [
-                        Info(AppStrings.emailAddress, email ?? ''),
-                        const Divider(),
-                        Info(AppStrings.dob, dob ?? ''),
-                        const Divider(),
-                        Info(AppStrings.gender, gender ?? ''),
-                      ])),
-                    ]))));
+                child: Center(
+                  child: SizedBox(
+                    width: ResponsiveWidget.isSmallScreen(context)
+                        ? context.getWidth()
+                        : context.getWidth() / 2,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: Sizes.size100,
+                            width: Sizes.size100,
+                            child: CircleAvatar(
+                              child: imageFile != null
+                                  ? ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(Sizes.size50),
+                                      child: Image.file(imageFile!,
+                                          fit: BoxFit.cover,
+                                          height: Sizes.size100,
+                                          width: Sizes.size100))
+                                  : ClipOval(
+                                      child: gender == AppStrings.other
+                                          ? Assets.images.other.image()
+                                          : gender == AppStrings.male
+                                              ? Assets.images.man.image()
+                                              : Assets.images.woman.image()),
+                            ),
+                          ),
+                          Center(
+                              child: Text(name ?? '',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ))),
+                          ProfileCardWidget(
+                              child: Column(children: [
+                            Info(AppStrings.emailAddress, email ?? ''),
+                            const Divider(),
+                            Info(AppStrings.dob, dob ?? ''),
+                            const Divider(),
+                            Info(AppStrings.gender, gender ?? ''),
+                          ])),
+                        ]),
+                  ),
+                ))));
   }
 }

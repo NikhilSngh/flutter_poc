@@ -19,7 +19,7 @@ class MovieListModel {
       _$MovieListModelFromJson(data);
 }
 
-@JsonSerializable()
+@JsonSerializable(createToJson: true)
 class Movie {
    String? title;
    String? overview;
@@ -68,6 +68,8 @@ class Movie {
 
 
   factory Movie.fromJson(Map<String, dynamic> data) => _$MovieFromJson(data);
+
+   Map<String, dynamic> toJson() => _$MovieToJson(this);
 
   String getContentRating() {
     return adult! ? "A" : "U/A";

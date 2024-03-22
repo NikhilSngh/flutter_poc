@@ -12,6 +12,7 @@ import 'package:flutter_poc/extension.dart';
 import 'package:flutter_poc/helper/common_radio_button.dart';
 import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:flutter_poc/helper/app_textfield.dart';
+import 'package:flutter_poc/helper/responsive_widget.dart';
 import 'dart:io';
 import 'package:flutter_poc/signup/bloc/signup_cubit.dart';
 import 'package:flutter_poc/signup/bloc/state/signup_state.dart';
@@ -52,139 +53,144 @@ class SignupScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: AppPaddingMarginConstant.regular,
                             right: AppPaddingMarginConstant.regular),
-                        child: Form(
-                            key: _formKey,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  ValueListenableBuilder(
-                                      valueListenable: _gender,
-                                      builder: (context, value, _) {
-                                        return ProfileImage(
-                                            pickerImage: (image) {
-                                              pickedImage = image;
-                                            },
-                                            gender: _gender.value);
-                                      }),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        bottom: AppPaddingMarginConstant.small,
-                                        top: AppPaddingMarginConstant.small),
-                                    child: AppTextField(
-                                        label: AppStrings.enterName,
-                                        controller: _nameEditingController,
-                                        validator: (value) {
-                                          return Validator.isValidName(context,
-                                              name: value);
-                                        },
-                                        inputType: TextInputType.name),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                      bottom: SpacingConstant
-                                          .signupWidgetVerticalSpacing10,
+                        child: SizedBox(
+                          width: ResponsiveWidget.isSmallScreen(context)
+                              ? context.getWidth()
+                              : context.getWidth() / 2,
+                          child: Form(
+                              key: _formKey,
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    ValueListenableBuilder(
+                                        valueListenable: _gender,
+                                        builder: (context, value, _) {
+                                          return ProfileImage(
+                                              pickerImage: (image) {
+                                                pickedImage = image;
+                                              },
+                                              gender: _gender.value);
+                                        }),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          bottom: AppPaddingMarginConstant.small,
+                                          top: AppPaddingMarginConstant.small),
+                                      child: AppTextField(
+                                          label: AppStrings.enterName,
+                                          controller: _nameEditingController,
+                                          validator: (value) {
+                                            return Validator.isValidName(context,
+                                                name: value);
+                                          },
+                                          inputType: TextInputType.name),
                                     ),
-                                    child: AppTextField(
-                                        label: AppStrings.enterEmail,
-                                        controller: _emailEditingController,
-                                        validator: (value) {
-                                          return Validator.isEmailValid(context,
-                                              email: value);
-                                        },
-                                        inputType: TextInputType.emailAddress),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                      bottom: SpacingConstant
-                                          .signupWidgetVerticalSpacing10,
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: SpacingConstant
+                                            .signupWidgetVerticalSpacing10,
+                                      ),
+                                      child: AppTextField(
+                                          label: AppStrings.enterEmail,
+                                          controller: _emailEditingController,
+                                          validator: (value) {
+                                            return Validator.isEmailValid(context,
+                                                email: value);
+                                          },
+                                          inputType: TextInputType.emailAddress),
                                     ),
-                                    child: AppTextField(
-                                        label: AppStrings.dob,
-                                        readOnly: true,
-                                        onTap: () {
-                                          DatePicker(context, date: (date) {
-                                            _dobEditingController.text = date;
-                                          }).show();
-                                        },
-                                        controller: _dobEditingController,
-                                        validator: (value) {
-                                          return Validator.emptyValidate(
-                                              context,
-                                              value: value,
-                                              message:
-                                                  AppStrings.dobIsRequired);
-                                        },
-                                        inputType: TextInputType.emailAddress),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                      bottom: SpacingConstant
-                                          .signupWidgetVerticalSpacing10,
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: SpacingConstant
+                                            .signupWidgetVerticalSpacing10,
+                                      ),
+                                      child: AppTextField(
+                                          label: AppStrings.dob,
+                                          readOnly: true,
+                                          onTap: () {
+                                            DatePicker(context, date: (date) {
+                                              _dobEditingController.text = date;
+                                            }).show();
+                                          },
+                                          controller: _dobEditingController,
+                                          validator: (value) {
+                                            return Validator.emptyValidate(
+                                                context,
+                                                value: value,
+                                                message:
+                                                    AppStrings.dobIsRequired);
+                                          },
+                                          inputType: TextInputType.emailAddress),
                                     ),
-                                    child: AppTextField(
-                                        label: AppStrings.enterPassword,
-                                        controller: _passwordEditingController,
-                                        isPassword: true,
-                                        validator: (value) {
-                                          return Validator.isValidPassword(
-                                              context,
-                                              password: value);
-                                        },
-                                        inputType:
-                                            TextInputType.visiblePassword),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                      bottom: SpacingConstant
-                                          .signupWidgetVerticalSpacing10,
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: SpacingConstant
+                                            .signupWidgetVerticalSpacing10,
+                                      ),
+                                      child: AppTextField(
+                                          label: AppStrings.enterPassword,
+                                          controller: _passwordEditingController,
+                                          isPassword: true,
+                                          validator: (value) {
+                                            return Validator.isValidPassword(
+                                                context,
+                                                password: value);
+                                          },
+                                          inputType:
+                                              TextInputType.visiblePassword),
                                     ),
-                                    child: AppTextField(
-                                        label: AppStrings.confirmPassword,
-                                        controller:
-                                            _confirmPasswordEditingController,
-                                        isPassword: true,
-                                        validator: (value) {
-                                          return Validator
-                                              .isValidConfirmPassword(context,
-                                                  password: value,
-                                                  matchPassword:
-                                                      _passwordEditingController
-                                                          .text);
-                                        },
-                                        inputType:
-                                            TextInputType.visiblePassword),
-                                  ),
-                                  AppRadioButton(
-                                      label: "Gender",
-                                      items: const ["male", "female", "other"],
-                                      onChange: (value) {
-                                        _gender.value = value;
-                                      }),
-                                  BlocConsumer<SignupCubit, SignupState>(
-                                      listener: (context, state) {
-                                    if (state is SignupError) {
-                                      Navigator.pop(context);
-                                      SnackBar snackBar = SnackBar(
-                                          content: Text(state.message ?? ''));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                    } else if (state is SignupSuccessState) {
-                                      Navigator.pop(context);
-                                      context.router.pop();
-                                    }else if(state is SignupLoadingState){
-                                      context.showLoader();
-                                    }
-                                  }, builder: (context, state) {
-                                    return AppElevatedButton(
-                                        title: AppStrings.signUp,
-                                        onPressed: () {
-                                          _validateForm(
-                                              context.read<SignupCubit>(),
-                                              pickedImage);
-                                        });
-                                  })
-                                ])))))));
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: SpacingConstant
+                                            .signupWidgetVerticalSpacing10,
+                                      ),
+                                      child: AppTextField(
+                                          label: AppStrings.confirmPassword,
+                                          controller:
+                                              _confirmPasswordEditingController,
+                                          isPassword: true,
+                                          validator: (value) {
+                                            return Validator
+                                                .isValidConfirmPassword(context,
+                                                    password: value,
+                                                    matchPassword:
+                                                        _passwordEditingController
+                                                            .text);
+                                          },
+                                          inputType:
+                                              TextInputType.visiblePassword),
+                                    ),
+                                    AppRadioButton(
+                                        label: "Gender",
+                                        items: const ["male", "female", "other"],
+                                        onChange: (value) {
+                                          _gender.value = value;
+                                        }),
+                                    BlocConsumer<SignupCubit, SignupState>(
+                                        listener: (context, state) {
+                                      if (state is SignupError) {
+                                        Navigator.pop(context);
+                                        SnackBar snackBar = SnackBar(
+                                            content: Text(state.message ?? ''));
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else if (state is SignupSuccessState) {
+                                        Navigator.pop(context);
+                                        context.router.pop();
+                                      }else if(state is SignupLoadingState){
+                                        context.showLoader();
+                                      }
+                                    }, builder: (context, state) {
+                                      return AppElevatedButton(
+                                          title: AppStrings.signUp,
+                                          onPressed: () {
+                                            _validateForm(
+                                                context.read<SignupCubit>(),
+                                                pickedImage);
+                                          });
+                                    })
+                                  ])),
+                        ))))));
   }
 
   void _validateForm(SignupCubit signupCubit, File? pickedImage) async {
