@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_poc/constant/app_icon_constant.dart';
 import 'package:flutter_poc/constant/app_strings.dart';
@@ -11,9 +13,9 @@ import 'package:flutter_poc/theme/ui_colors.dart';
 
 
 class ProfileImage extends StatefulWidget {
-  final ValueChanged<File>? pickerImage;
+  final ValueChanged<Uint8List>? pickerImage;
   final String? gender;
-  File? pickedImage;
+  Uint8List? pickedImage;
 
   ProfileImage({this.pickerImage,
     this.pickedImage,
@@ -42,7 +44,7 @@ class _ProfileImageState extends State<ProfileImage> {
               child: widget.pickedImage != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(Sizes.size50),
-                      child: Image.file(widget.pickedImage!,
+                      child: Image.memory(widget.pickedImage!,
                           fit: BoxFit.cover,
                           height: Sizes.size100,
                           width: Sizes.size100))

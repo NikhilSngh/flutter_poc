@@ -13,7 +13,6 @@ import 'package:flutter_poc/helper/common_radio_button.dart';
 import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:flutter_poc/helper/app_textfield.dart';
 import 'package:flutter_poc/helper/responsive_widget.dart';
-import 'dart:io';
 import 'package:flutter_poc/signup/bloc/signup_cubit.dart';
 import 'package:flutter_poc/signup/bloc/state/signup_state.dart';
 import 'package:flutter_poc/signup/profile_Image.dart';
@@ -38,7 +37,7 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    File? pickedImage;
+    Uint8List? pickedImage;
 
     return BlocProvider<SignupCubit>(
         create: (context) => SignupCubit(
@@ -193,7 +192,7 @@ class SignupScreen extends StatelessWidget {
                         ))))));
   }
 
-  void _validateForm(SignupCubit signupCubit, File? pickedImage) async {
+  void _validateForm(SignupCubit signupCubit, Uint8List? pickedImage) async {
     if (_formKey.currentState?.validate() == true) {
       SystemChannels.textInput.invokeMethod("TextInput.hide");
       Map<String, dynamic> params = {

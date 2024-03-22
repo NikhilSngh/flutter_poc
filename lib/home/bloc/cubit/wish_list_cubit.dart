@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
-import 'package:flutter_poc/db/db_manager.dart';
 import 'package:flutter_poc/home/bloc/state/wish_list_state.dart';
 import 'package:flutter_poc/home/model/movie_list.dart';
 import 'package:flutter_poc/sl/locator.dart';

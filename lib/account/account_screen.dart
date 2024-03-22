@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   String? name, email, dob, gender;
-  File? imageFile;
+  Uint8List? imageBytes;
   var sharedInstance = serviceLocator<AppSharedPref>();
   var fileManager = serviceLocator<FileManager>();
 
@@ -43,8 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
     email = sharedInstance.getString(key: PrefKey.email);
     dob = sharedInstance.getString(key: PrefKey.dob);
     gender = sharedInstance.getString(key: PrefKey.gender);
-    imageFile = await fileManager
-        .getFile(sharedInstance.getString(key: PrefKey.profileImage));
+    imageBytes = base64Decode(sharedInstance.getString(key: PrefKey.profileImage));
     setState(() {});
   }
 
@@ -104,11 +104,11 @@ class _AccountScreenState extends State<AccountScreen> {
                             height: Sizes.size100,
                             width: Sizes.size100,
                             child: CircleAvatar(
-                              child: imageFile != null
+                              child: imageBytes != null
                                   ? ClipRRect(
                                       borderRadius:
                                           BorderRadius.circular(Sizes.size50),
-                                      child: Image.file(imageFile!,
+                                      child: Image.memory(imageBytes!,
                                           fit: BoxFit.cover,
                                           height: Sizes.size100,
                                           width: Sizes.size100))

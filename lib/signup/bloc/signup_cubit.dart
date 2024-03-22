@@ -1,14 +1,13 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_poc/constant/app_constant.dart';
 import 'package:flutter_poc/constant/app_shared_pref.dart';
 import 'package:flutter_poc/constant/pref_key.dart';
 import 'package:flutter_poc/signup/bloc/state/signup_state.dart';
-import 'package:flutter_poc/sl/locator.dart';
 import 'package:flutter_poc/utils/common_utility.dart';
 import 'package:flutter_poc/utils/file_manager.dart';
-import 'package:path/path.dart';
 
 class SignupCubit extends Cubit<SignupState> {
   final AppSharedPref sharedInstance;
@@ -35,11 +34,10 @@ class SignupCubit extends Cubit<SignupState> {
         value: AppUtility.encrypt(
                 AppConstant.encryptKey, request[LoginApiKeys.password])
             .base64);
-    if (request[LoginApiKeys.image] is File) {
-      FileManager fileManager = serviceLocator<FileManager>();
-      var path = await fileManager.saveFile(request[LoginApiKeys.image]);
+    if (request[LoginApiKeys.image] is Uint8List) {
+      final encodedImage = base64Encode(request[LoginApiKeys.image]);
       sharedInstance.setString(
-          key: PrefKey.profileImage, value: basename(path.path));
+          key: PrefKey.profileImage, value: encodedImage);
     }
     sharedInstance.setBool(key: PrefKey.loginStatus, value: true);
     emit(SignupSuccessState());

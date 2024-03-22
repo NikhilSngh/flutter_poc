@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,18 +30,14 @@ class EditAccount extends StatelessWidget {
   final EditAccountCubit _accountCubit = EditAccountCubit();
   final ValueNotifier<String> _gender = ValueNotifier<String>("");
   final Function isUpdated;
-  File? _pickedImage;
+  Uint8List? _pickedImage;
 
   EditAccount({super.key,required this.isUpdated}) {
     var sharedInstance = serviceLocator<AppSharedPref>();
-    FileManager fileManager = serviceLocator<FileManager>();
-    fileManager
-        .getFile(sharedInstance.getString(key: PrefKey.profileImage))
-        .then((value) {
+    var value = base64Decode(sharedInstance.getString(key: PrefKey.profileImage));
       _pickedImage = value;
       _gender.value = "";
-      _gender.value = sharedInstance.getString(key: PrefKey.gender);
-    });
+
     _dobEditingController.text =
         sharedInstance.getString(key: PrefKey.dob);
     _nameEditingController.text =
