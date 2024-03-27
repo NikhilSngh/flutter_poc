@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_poc/constant/app_padding_margin_constants.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/helper/app_text_button.dart';
 import 'package:file_picker/file_picker.dart' as file_picker;
 import 'package:image_picker/image_picker.dart';
@@ -18,31 +20,23 @@ class AppImagePicker {
 
   void _imagePicker() {
     showDialog<ImageSource>(
-            context: context,
-            builder: (context) =>
-                AlertDialog(content: Text("chooseImage"), actions: [
-                  AppElevatedButton(
-                    title: "camera",
-                    onPressed: () =>
-                        {Navigator.pop(context, ImageSource.camera)},
-                  ),
-                  AppElevatedButton(
-                    title: "gallery",
-                    onPressed: () => {
-                      if (kIsWeb) {_pickImageWeb()
-                      } else {_pickImage()}
-
-                    },
-                  )
-                ])) /*.then((ImageSource? source) async {
-      if (source == null) return;
-      final pickedFile = await ImagePicker().pickImage(source: source);
-      if (pickedFile == null) return;
-      if (pickerImage != null) {
-        pickerImage!(File(pickedFile.path));
-      }
-    })*/
-        ;
+        context: context,
+        builder: (context) =>
+            AlertDialog(content: const Text(AppStrings.chooseImage), actions: [
+              !kIsWeb?AppElevatedButton(
+                title: AppStrings.camera,
+                onPressed: () => {Navigator.pop(context, ImageSource.camera)},
+              ):const SizedBox.shrink(),
+              Container(
+                margin: const EdgeInsets.only(top: AppPaddingMarginConstant.extraSmall),
+                child: AppElevatedButton(
+                  title: AppStrings.gallery,
+                  onPressed: () => {
+                    if (kIsWeb) {_pickImageWeb()} else {_pickImage()}
+                  },
+                ),
+              )
+            ]));
   }
 
   Future<void> _pickImage() async {

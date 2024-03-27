@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_poc/constant/app_strings.dart';
 import 'package:flutter_poc/data/network/api_url.dart';
 import 'package:flutter_poc/helper/responsive_widget.dart';
 import 'package:flutter_poc/home/bloc/cubit/home_cubit.dart';
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: AppBar(title: const Text("Home")),
+        appBar: AppBar(title: const Text(AppStrings.home)),
         body: SafeArea(
           child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
             return state is HomeLoaded

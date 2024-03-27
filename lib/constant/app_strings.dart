@@ -35,4 +35,8 @@ class AppStrings {
   static const String detail = "Detail";
   static const String appTitle = "Movie Demo App";
   static const String proceedToMovieApp = "Proceed to Movie App";
+  static const String chooseImage = "Choose Image";
+  static const String camera = "Camera";
+  static const String gallery = "Gallery";
+
 }
